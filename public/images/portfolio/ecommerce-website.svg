@@ -1,0 +1,8 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#3498db"/>
+  <circle cx="200" cy="300" r="100" fill="rgba(255, 255, 255, 0.2)"/>
+  <circle cx="600" cy="150" r="150" fill="rgba(255, 255, 255, 0.1)"/>
+  <circle cx="400" cy="450" r="120" fill="rgba(255, 255, 255, 0.15)"/>
+  <text x="400" y="300" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="white">Site E-commerce</text>
+  <text x="400" y="360" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Projet 1</text>
+</svg>

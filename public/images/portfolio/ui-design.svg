@@ -1,0 +1,8 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#e74c3c"/>
+  <circle cx="200" cy="350" r="140" fill="rgba(255, 255, 255, 0.2)"/>
+  <circle cx="550" cy="150" r="120" fill="rgba(255, 255, 255, 0.1)"/>
+  <circle cx="450" cy="500" r="130" fill="rgba(255, 255, 255, 0.15)"/>
+  <text x="400" y="300" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="white">Design UI/UX</text>
+  <text x="400" y="360" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Projet 4</text>
+</svg>

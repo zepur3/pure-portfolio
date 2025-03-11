@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Définition de la police Mona Sans locale */
+@font-face {
+  font-family: 'Mona Sans';
+  src: url('/fonts/Mona-Sans.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
+/* Mode sombre (par défaut) */
+:root {
+  --background: #0f0f0f;
+  --foreground: #ffffff;
+  --accent: #6d28d9;
+  --accent-light: #8b5cf6;
+  --accent-dark: #4c1d95;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --border: rgba(255, 255, 255, 0.1);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: 'Mona Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Mode clair */
+.light {
+  --background: #ffffff;
+  --foreground: #0f0f0f;
+  --accent: #6d28d9;
+  --accent-light: #8b5cf6;
+  --accent-dark: #4c1d95;
+  --text-primary: #0f0f0f;
+  --text-secondary: #525252;
+  --border: rgba(0, 0, 0, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Valeur optimisée pour desktop */
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 70px; /* Valeur optimisée pour mobile - plus petite pour éviter les grands espaces vides */
   }
 }
 
 body {
+  background-color: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.fluid-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, var(--accent-light), var(--accent-dark));
+  opacity: 0.3;
+  filter: blur(100px);
+  mix-blend-mode: overlay;
+  transition: background 0.3s ease;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--accent-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: background 0.3s ease;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: background 0.3s ease, border 0.3s ease;
+}
+
+.section {
+  padding: 100px 0;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Styles spécifiques pour les composants en mode sombre/clair */
+.light .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Assurer que tous les textes changent de couleur avec le thème */
+h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea {
+  transition: color 0.3s ease;
+}
+
+/* Assurer que tous les arrière-plans changent avec le thème */
+div, section, header, footer, nav, main, aside {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Assurer que les bordures changent avec le thème */
+*, *::before, *::after {
+  transition: border-color 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-light);
 }
