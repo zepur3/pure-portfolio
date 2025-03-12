@@ -53,7 +53,8 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Utiliser will-change uniquement sur desktop */
+  /* Les transitions seront appliquées conditionnellement via JavaScript */
 }
 
 .parallax-container {
@@ -69,7 +70,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  will-change: transform;
+  /* will-change sera appliqué conditionnellement via JavaScript */
 }
 
 .fluid-effect {
@@ -78,9 +79,18 @@ body {
   height: 100%;
   background: radial-gradient(circle at center, var(--accent-light), var(--accent-dark));
   opacity: 0.3;
-  filter: blur(100px);
-  mix-blend-mode: overlay;
-  transition: background 0.3s ease;
+  /* Réduire l'intensité du flou pour de meilleures performances */
+  filter: blur(60px);
+  /* Éviter mix-blend-mode sur mobile car très coûteux en performance */
+  /* mix-blend-mode sera appliqué conditionnellement via JavaScript */
+}
+
+/* Version mobile optimisée avec moins d'effets */
+@media (max-width: 768px) {
+  .fluid-effect {
+    filter: blur(30px);
+    opacity: 0.2;
+  }
 }
 
 .text-gradient {
@@ -97,7 +107,15 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 10px;
-  transition: background 0.3s ease, border 0.3s ease;
+}
+
+/* Version mobile optimisée avec moins d'effets */
+@media (max-width: 768px) {
+  .glass-effect {
+    /* Réduire l'intensité du flou pour de meilleures performances */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
 }
 
 .section {
@@ -122,19 +140,43 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* Assurer que tous les textes changent de couleur avec le thème */
-h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea {
-  transition: color 0.3s ease;
-}
-
-/* Assurer que tous les arrière-plans changent avec le thème */
-div, section, header, footer, nav, main, aside {
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Assurer que les bordures changent avec le thème */
-*, *::before, *::after {
-  transition: border-color 0.3s ease;
+/* Transitions optimisées pour desktop uniquement */
+@media (min-width: 769px) {
+  /* Assurer que tous les textes changent de couleur avec le thème */
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea {
+    transition: color 0.3s ease;
+  }
+  
+  /* Assurer que tous les arrière-plans changent avec le thème */
+  div, section, header, footer, nav, main, aside {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Assurer que les bordures changent avec le thème */
+  *, *::before, *::after {
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Activer will-change uniquement sur desktop */
+  .parallax-layer {
+    will-change: transform;
+  }
+  
+  /* Activer mix-blend-mode uniquement sur desktop */
+  .fluid-effect {
+    mix-blend-mode: overlay;
+    transition: background 0.3s ease;
+  }
+  
+  /* Transitions pour le glass effect sur desktop */
+  .glass-effect {
+    transition: background 0.3s ease, border 0.3s ease;
+  }
+  
+  /* Transition pour le body sur desktop */
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
 
 /* Scrollbar styling */

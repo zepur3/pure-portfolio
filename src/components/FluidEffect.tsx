@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface FluidEffectProps {
   className?: string;
@@ -24,6 +24,21 @@ const FluidEffect = ({ className = "" }: FluidEffectProps) => {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const frameRef = useRef<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Détection de mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone/g.test(userAgent);
+      setIsMobile(isMobileDevice || window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,50 +55,79 @@ const FluidEffect = ({ className = "" }: FluidEffectProps) => {
     window.addEventListener("resize", setCanvasDimensions);
 
     // Get canvas context
-    contextRef.current = canvas.getContext("2d");
+    contextRef.current = canvas.getContext("2d", { alpha: true });
     const ctx = contextRef.current;
     if (!ctx) return;
 
-    // Create particles
+    // Create particles - réduire le nombre sur mobile
     const createParticles = () => {
       particlesRef.current = [];
-      const numberOfParticles = 50;
+      // Réduire considérablement le nombre de particules sur mobile
+      const numberOfParticles = isMobile ? 15 : 40;
       const colors = [
-        "rgba(109, 40, 217, 0.7)", // --accent
-        "rgba(139, 92, 246, 0.7)", // --accent-light
-        "rgba(76, 29, 149, 0.7)", // --accent-dark
+        "rgba(109, 40, 217, 0.5)", // --accent avec opacité réduite
+        "rgba(139, 92, 246, 0.5)", // --accent-light avec opacité réduite
+        "rgba(76, 29, 149, 0.5)", // --accent-dark avec opacité réduite
       ];
 
       for (let i = 0; i < numberOfParticles; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 20 + 10,
+          // Réduire la taille des particules sur mobile
+          radius: Math.random() * (isMobile ? 12 : 18) + (isMobile ? 5 : 10),
           velocity: {
-            x: Math.random() * 2 - 1,
-            y: Math.random() * 2 - 1,
+            // Ralentir les particules sur mobile
+            x: Math.random() * (isMobile ? 0.5 : 1.5) - (isMobile ? 0.25 : 0.75),
+            y: Math.random() * (isMobile ? 0.5 : 1.5) - (isMobile ? 0.25 : 0.75),
           },
           color: colors[Math.floor(Math.random() * colors.length)],
-          opacity: Math.random() * 0.5 + 0.2,
+          opacity: Math.random() * 0.4 + 0.1, // Réduire l'opacité globale
         });
       }
     };
 
     createParticles();
 
-    // Mouse move handler
+    // Gestionnaire d'événements pour souris et tactile
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = {
         x: e.clientX,
         y: e.clientY,
       };
     };
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mouseRef.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
+      }
+    };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    // N'ajouter les écouteurs d'événements que si ce n'est pas un appareil mobile
+    // pour économiser des ressources
+    if (!isMobile) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("touchmove", handleTouchMove);
+    }
 
-    // Animation loop
-    const animate = () => {
+    // Animation loop avec throttling pour mobile
+    let lastFrameTime = 0;
+    const targetFPS = isMobile ? 30 : 60; // Réduire le FPS sur mobile
+    const frameInterval = 1000 / targetFPS;
+    
+    const animate = (timestamp: number) => {
       if (!ctx || !canvas) return;
+      
+      // Limiter le FPS sur mobile
+      const elapsed = timestamp - lastFrameTime;
+      if (elapsed < frameInterval && isMobile) {
+        frameRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = timestamp;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -101,35 +145,46 @@ const FluidEffect = ({ className = "" }: FluidEffectProps) => {
           particle.velocity.y *= -1;
         }
 
-        // Mouse interaction
-        const dx = mouseRef.current.x - particle.x;
-        const dy = mouseRef.current.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 200;
+        // Mouse interaction - désactivé sur mobile pour économiser des ressources
+        if (!isMobile) {
+          const dx = mouseRef.current.x - particle.x;
+          const dy = mouseRef.current.y - particle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const maxDistance = 150; // Réduire la distance d'interaction
 
-        if (distance < maxDistance) {
-          const force = (maxDistance - distance) / maxDistance;
-          particle.velocity.x -= (dx / distance) * force * 0.02;
-          particle.velocity.y -= (dy / distance) * force * 0.02;
+          if (distance < maxDistance) {
+            const force = (maxDistance - distance) / maxDistance;
+            particle.velocity.x -= (dx / distance) * force * 0.01; // Réduire la force
+            particle.velocity.y -= (dy / distance) * force * 0.01;
+          }
         }
 
-        // Draw particle
+        // Simplifier le rendu sur mobile
         ctx.beginPath();
-        const gradient = ctx.createRadialGradient(
-          particle.x, 
-          particle.y, 
-          0, 
-          particle.x, 
-          particle.y, 
-          particle.radius
-        );
-        gradient.addColorStop(0, particle.color);
-        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-        
-        ctx.fillStyle = gradient;
-        ctx.globalAlpha = particle.opacity;
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fill();
+        if (isMobile) {
+          // Utiliser des cercles simples sur mobile au lieu de gradients
+          ctx.fillStyle = particle.color;
+          ctx.globalAlpha = particle.opacity;
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // Utiliser des gradients sur desktop
+          const gradient = ctx.createRadialGradient(
+            particle.x, 
+            particle.y, 
+            0, 
+            particle.x, 
+            particle.y, 
+            particle.radius
+          );
+          gradient.addColorStop(0, particle.color);
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+          
+          ctx.fillStyle = gradient;
+          ctx.globalAlpha = particle.opacity;
+          ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
       });
 
       // Blend particles
@@ -138,15 +193,23 @@ const FluidEffect = ({ className = "" }: FluidEffectProps) => {
       frameRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
 
     // Cleanup
     return () => {
       window.removeEventListener("resize", setCanvasDimensions);
-      window.removeEventListener("mousemove", handleMouseMove);
+      if (!isMobile) {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("touchmove", handleTouchMove);
+      }
       cancelAnimationFrame(frameRef.current);
     };
-  }, []);
+  }, [isMobile]); // Ajouter isMobile comme dépendance
+
+  // Si c'est un mobile avec des performances très limitées, on peut même désactiver complètement l'effet
+  if (isMobile && window.innerWidth < 480) {
+    return null;
+  }
 
   return (
     <canvas 
