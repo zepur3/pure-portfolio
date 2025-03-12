@@ -1,47 +1,51 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
 
-// Import des composants avec chargement dynamique
-const Navbar = dynamic(() => import("@/components/Navbar"));
-const Hero = dynamic(() => import("@/components/Hero"));
-const About = dynamic(() => import("@/components/About"));
-const Services = dynamic(() => import("@/components/Services"));
-const Portfolio = dynamic(() => import("@/components/Portfolio"));
-const Contact = dynamic(() => import("@/components/Contact"));
-const Footer = dynamic(() => import("@/components/Footer"));
-const FluidEffect = dynamic(() => import("@/components/FluidEffect"));
-const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"));
+// Import des composants avec chargement différé pour les sections non critiques
+import dynamic from "next/dynamic";
+const About = dynamic(() => import("@/components/About"), { ssr: true });
+const Services = dynamic(() => import("@/components/Services"), { ssr: true });
+const Portfolio = dynamic(() => import("@/components/Portfolio"), { ssr: true });
+const Contact = dynamic(() => import("@/components/Contact"), { ssr: true });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
+const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), { ssr: true });
+const FluidEffect = dynamic(() => import("@/components/FluidEffect"), {
+  ssr: true,
+  loading: () => <div className="fixed inset-0 bg-background" /> // Placeholder pendant le chargement
+});
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+
+  // S'assurer que le composant est monté côté client avant d'afficher tout le contenu
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Rendu de base qui sera affiché immédiatement
   return (
-    <main className="relative">
-      {/* Effet fluide en arrière-plan */}
-      <FluidEffect className="opacity-30" />
-      
-      {/* Barre de navigation */}
+    <main className="relative bg-background min-h-screen w-full">
+      {/* Rendu immédiat de l'en-tête critique */}
       <Navbar />
-      
-      {/* Section Hero avec effet de parallax */}
       <Hero />
+
+      {/* Effet fluide en arrière-plan - chargé de manière différée */}
+      {mounted && <FluidEffect className="opacity-30" />}
       
-      {/* Section À propos */}
-      <About />
-      
-      {/* Section Services */}
-      <Services />
-      
-      {/* Section Portfolio */}
-      <Portfolio />
-      
-      {/* Section Contact */}
-      <Contact />
-      
-      {/* Pied de page */}
-      <Footer />
-      
-      {/* Bouton de changement de thème */}
-      <ThemeToggle />
+      {/* Sections restantes - chargées de manière différée */}
+      {mounted && (
+        <>
+          <About />
+          <Services />
+          <Portfolio />
+          <Contact />
+          <Footer />
+          <ThemeToggle />
+        </>
+      )}
     </main>
   );
 }

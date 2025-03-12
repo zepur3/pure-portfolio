@@ -37,10 +37,10 @@ const About = () => {
 
   return (
     <>
-      {/* Ancre invisible placée avant la section pour un meilleur ciblage */}
-      <div id="about-anchor" style={{ position: 'relative', top: '100px', visibility: 'hidden', height: 0 }}></div>
+      {/* Ancre invisible placée avant la section pour un meilleur ciblage - réduit la distance */}
+      <div id="about-anchor" style={{ position: 'relative', top: '20px', visibility: 'hidden', height: 0 }}></div>
 
-      <section id="about" className="section bg-background relative pt-24 md:pt-28">
+      <section id="about" className="section bg-background relative pt-8 md:pt-12">
         <div className="fluid-effect opacity-10 absolute top-0 right-0"></div>
         <div className="container mx-auto px-4 md:px-6">
           <motion.div

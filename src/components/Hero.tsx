@@ -94,7 +94,7 @@ const Hero = () => {
   }, [layerRefs, isMobile, isLoaded]);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden">
+    <section id="home" className="relative h-screen w-full overflow-hidden mt-0 pt-0">
       <div ref={containerRef} className="parallax-container h-full w-full">
         {/* Fluid Background Effect - Simplifié pour mobile */}
         {!isMobile && (
