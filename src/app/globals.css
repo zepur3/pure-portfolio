@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-/* Définition de la police Mona Sans locale */
+/* Définition de la police Mona Sans locale avec preload */
 @font-face {
   font-family: 'Mona Sans';
   src: url('/fonts/Mona-Sans.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: swap; /* Assurer que le texte est visible pendant le chargement de la police */
 }
 
 /* Mode sombre (par défaut) */
@@ -37,15 +37,10 @@
   --border: rgba(0, 0, 0, 0.1);
 }
 
+/* Styles critiques pour le LCP - Priorité haute */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px; /* Valeur optimisée pour desktop */
-}
-
-@media (max-width: 768px) {
-  html {
-    scroll-padding-top: 70px; /* Valeur optimisée pour mobile - plus petite pour éviter les grands espaces vides */
-  }
 }
 
 body {
@@ -57,6 +52,15 @@ body {
   /* Les transitions seront appliquées conditionnellement via JavaScript */
 }
 
+/* Styles critiques pour le LCP - Priorité haute */
+.text-gradient {
+  background: linear-gradient(to right, var(--accent-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Styles pour les composants principaux - Priorité haute */
 .parallax-container {
   position: relative;
   overflow: hidden;
@@ -73,6 +77,25 @@ body {
   /* will-change sera appliqué conditionnellement via JavaScript */
 }
 
+/* Optimisations pour mobile */
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 70px; /* Valeur optimisée pour mobile */
+  }
+  
+  .fluid-effect {
+    filter: blur(30px);
+    opacity: 0.2;
+  }
+  
+  .glass-effect {
+    /* Réduire l'intensité du flou pour de meilleures performances */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+}
+
+/* Styles non critiques - Priorité basse */
 .fluid-effect {
   position: absolute;
   width: 100%;
@@ -85,37 +108,12 @@ body {
   /* mix-blend-mode sera appliqué conditionnellement via JavaScript */
 }
 
-/* Version mobile optimisée avec moins d'effets */
-@media (max-width: 768px) {
-  .fluid-effect {
-    filter: blur(30px);
-    opacity: 0.2;
-  }
-}
-
-.text-gradient {
-  background: linear-gradient(to right, var(--accent-light), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  transition: background 0.3s ease;
-}
-
 .glass-effect {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 10px;
-}
-
-/* Version mobile optimisée avec moins d'effets */
-@media (max-width: 768px) {
-  .glass-effect {
-    /* Réduire l'intensité du flou pour de meilleures performances */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-  }
 }
 
 .section {
@@ -195,4 +193,37 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-light);
+}
+
+/* Animation optimisée pour mobile */
+@media (max-width: 768px) {
+  @keyframes pulse {
+    0% {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.2;
+      transform: scale(1.03);
+    }
+    100% {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
 }

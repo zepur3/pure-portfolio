@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "./anchor-navigation.js";
+import fs from 'fs';
+import path from 'path';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
 });
+
+// Lire les styles critiques
+const criticalCssPath = path.join(process.cwd(), 'src/app/critical.css');
+const criticalCss = fs.existsSync(criticalCssPath) 
+  ? fs.readFileSync(criticalCssPath, 'utf8') 
+  : '';
 
 export const metadata: Metadata = {
   title: "Portfolio | Créateur de Sites Web Professionnels",
@@ -40,6 +49,23 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        {/* Chargement du script de navigation de manière asynchrone */}
+        <script src="/anchor-navigation.js" async defer></script>
+        
+        {/* Préchargement de la police Mona Sans */}
+        <link 
+          rel="preload" 
+          href="/fonts/Mona-Sans.woff2" 
+          as="font" 
+          type="font/woff2" 
+          crossOrigin="anonymous" 
+        />
+        
+        {/* Styles critiques injectés directement pour éviter le blocage du rendu */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

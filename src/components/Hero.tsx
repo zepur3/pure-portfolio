@@ -8,6 +8,7 @@ import Link from "next/link";
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   
   // Créer les références en dehors de tout callback
   const layer0Ref = useRef<HTMLDivElement>(null);
@@ -30,11 +31,17 @@ const Hero = () => {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     
+    // Marquer le composant comme chargé
+    setIsLoaded(true);
+    
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Effet de parallaxe - désactivé ou simplifié sur mobile
   useEffect(() => {
+    // Ne pas exécuter l'effet tant que le composant n'est pas complètement chargé
+    if (!isLoaded) return;
+    
     // Si c'est un appareil mobile, ne pas ajouter l'effet de parallaxe
     if (isMobile) {
       // Appliquer une position statique pour les appareils mobiles
@@ -84,7 +91,7 @@ const Hero = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [layerRefs, isMobile]);
+  }, [layerRefs, isMobile, isLoaded]);
 
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
@@ -128,30 +135,24 @@ const Hero = () => {
           >
             {index === 2 && (
               <div className="absolute top-1/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                {/* Simplifier les animations sur mobile */}
-                {isMobile ? (
-                  <div className="text-center pointer-events-none">
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-                      <span className="text-gradient">Créateur</span> de Sites Web
-                    </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8">
-                      Je conçois des expériences web uniques et immersives pour donner vie à vos idées
-                    </p>
-                  </div>
-                ) : (
+                {/* Contenu principal - rendu immédiat sans animation pour améliorer le LCP */}
+                <div className="text-center pointer-events-none">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                    <span className="text-gradient">Créateur</span> de Sites Web
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8">
+                    Je conçois des expériences web uniques et immersives pour donner vie à vos idées
+                  </p>
+                </div>
+                
+                {/* Animations appliquées seulement après le chargement initial */}
+                {isLoaded && !isMobile && (
                   <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    className="text-center pointer-events-none"
-                  >
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-                      <span className="text-gradient">Créateur</span> de Sites Web
-                    </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8">
-                      Je conçois des expériences web uniques et immersives pour donner vie à vos idées
-                    </p>
-                  </motion.div>
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="absolute inset-0 z-0 pointer-events-none"
+                  />
                 )}
               </div>
             )}

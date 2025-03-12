@@ -1,11 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',  
+  output: 'export',
   images: {
-    unoptimized: true,  
+    unoptimized: true,
   },
-  // Les en-têtes HTTP ne fonctionnent pas avec l'export statique
+  // Optimisations pour améliorer le LCP
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['framer-motion', 'gsap'],
+  },
+  // Compression des ressources
+  compress: true,
+  // Optimisation des scripts
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
+  // Note: Les en-têtes HTTP ne fonctionnent pas avec l'export statique
   // Ils devront être configurés au niveau du serveur web (Apache/Nginx)
 };
 
