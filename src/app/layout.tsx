@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import fs from 'fs';
 import path from 'path';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +65,12 @@ export default function RootLayout({
           crossOrigin="anonymous" 
         />
         
+        {/* Utilisation de la feuille de style locale pour Mona Sans au lieu de la version externe (ray.st) */}
+        <link 
+          rel="stylesheet" 
+          href="/Mona-Sans.css" 
+        />
+        
         {/* Styles critiques injectés directement pour éviter le blocage du rendu */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
       </head>
@@ -71,6 +78,27 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         style={{ backgroundColor: 'var(--background)' }}
       >
+        {/* Script pour initialiser le thème avant le rendu */}
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const storedTheme = localStorage.getItem('theme');
+                  if (storedTheme === 'light') {
+                    document.documentElement.classList.add('light');
+                  } else {
+                    document.documentElement.classList.remove('light');
+                  }
+                } catch (e) {
+                  console.error('Error accessing localStorage:', e);
+                }
+              })();
+            `,
+          }}
+        />
         {children}
       </body>
     </html>

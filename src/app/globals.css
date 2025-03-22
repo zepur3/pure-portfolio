@@ -11,30 +11,150 @@
 
 /* Mode sombre (par défaut) */
 :root {
+  /* Couleurs primaires */
   --background: #0f0f0f;
   --foreground: #ffffff;
-  --accent: #6d28d9;
-  --accent-light: #8b5cf6;
-  --accent-dark: #4c1d95;
-  --text-primary: #ffffff;
-  --text-secondary: #a3a3a3;
-  --border: rgba(255, 255, 255, 0.1);
+  
+  /* Palette d'accent */
+  --accent-50: #f5f3ff;
+  --accent-100: #ede9fe;
+  --accent-200: #ddd6fe;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+  --accent-800: #5b21b6;
+  --accent-900: #4c1d95;
+  --accent-950: #2e1065;
+  
+  /* Raccourcis pour la compatibilité */
+  --accent: var(--accent-700);
+  --accent-light: var(--accent-500);
+  --accent-dark: var(--accent-900);
+  
+  /* Palette de gris */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+  
+  /* Textes */
+  --text-primary: var(--foreground);
+  --text-secondary: var(--gray-400);
+  --text-tertiary: var(--gray-500);
+  
+  /* Bordures */
+  --border-light: rgba(255, 255, 255, 0.1);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  
+  /* Alias pour compatibilité */
+  --border: var(--border-light);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  
+  /* Polices */
   --font-sans: 'Mona Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* Mode clair */
-.light {
+html.light {
+  /* Couleurs primaires */
   --background: #ffffff;
   --foreground: #0f0f0f;
-  --accent: #6d28d9;
-  --accent-light: #8b5cf6;
-  --accent-dark: #4c1d95;
-  --text-primary: #0f0f0f;
-  --text-secondary: #525252;
-  --border: rgba(0, 0, 0, 0.1);
+  
+  /* Palette d'accent - identique pour cohérence de marque */
+  /* Les nuances d'accent restent les mêmes */
+  
+  /* Textes */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  
+  /* Bordures */
+  --border-light: rgba(0, 0, 0, 0.1);
+  --border-medium: rgba(0, 0, 0, 0.15);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  
+  /* Ombres - plus subtiles en mode clair */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation de transition entre les thèmes */
+.theme-transition {
+  animation: theme-fade 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: filter;
+  pointer-events: none;
+}
+
+/* Effet de transition pour les éléments spécifiques */
+.theme-transition * {
+  transition: none !important;
+}
+
+@keyframes theme-fade {
+  0% {
+    filter: saturate(0) brightness(3) contrast(1.2);
+  }
+  10% {
+    filter: saturate(0.1) brightness(2.5) contrast(1.15);
+  }
+  20% {
+    filter: saturate(0.3) brightness(2) contrast(1.1);
+  }
+  40% {
+    filter: saturate(0.6) brightness(1.5) contrast(1.05);
+  }
+  70% {
+    filter: saturate(0.8) brightness(1.2) contrast(1.02);
+  }
+  100% {
+    filter: saturate(1) brightness(1) contrast(1);
+  }
+}
+
+/* Effet de flash pour le changement de thème */
+@keyframes theme-flash {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Pseudo-élément pour l'effet de flash */
+.theme-transition::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-500);
+  z-index: 9999;
+  pointer-events: none;
+  animation: theme-flash 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
 }
 
 /* Styles critiques pour le LCP - Priorité haute */
@@ -54,7 +174,7 @@ body {
 
 /* Styles critiques pour le LCP - Priorité haute */
 .text-gradient {
-  background: linear-gradient(to right, var(--accent-light), var(--accent));
+  background: linear-gradient(to right, var(--accent-500), var(--accent-700));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -100,7 +220,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, var(--accent-light), var(--accent-dark));
+  background: radial-gradient(circle at center, var(--accent-400), var(--accent-900));
   opacity: 0.3;
   /* Réduire l'intensité du flou pour de meilleures performances */
   filter: blur(60px);
@@ -114,6 +234,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 10px;
+  box-shadow: var(--shadow-md);
 }
 
 .section {
@@ -134,8 +255,179 @@ body {
 }
 
 /* Styles spécifiques pour les composants en mode sombre/clair */
-.light .glass-effect {
-  background: rgba(0, 0, 0, 0.2);
+html.light .glass-effect {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Classes utilitaires pour les couleurs */
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.bg-accent-50 {
+  background-color: var(--accent-50);
+}
+
+.bg-accent-100 {
+  background-color: var(--accent-100);
+}
+
+.bg-accent-200 {
+  background-color: var(--accent-200);
+}
+
+.bg-accent-300 {
+  background-color: var(--accent-300);
+}
+
+.bg-accent-400 {
+  background-color: var(--accent-400);
+}
+
+.bg-accent-500 {
+  background-color: var(--accent-500);
+}
+
+.bg-accent-600 {
+  background-color: var(--accent-600);
+}
+
+.bg-accent-700 {
+  background-color: var(--accent-700);
+}
+
+.bg-accent-800 {
+  background-color: var(--accent-800);
+}
+
+.bg-accent-900 {
+  background-color: var(--accent-900);
+}
+
+.bg-accent-950 {
+  background-color: var(--accent-950);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.text-accent-50 {
+  color: var(--accent-50);
+}
+
+.text-accent-100 {
+  color: var(--accent-100);
+}
+
+.text-accent-200 {
+  color: var(--accent-200);
+}
+
+.text-accent-300 {
+  color: var(--accent-300);
+}
+
+.text-accent-400 {
+  color: var(--accent-400);
+}
+
+.text-accent-500 {
+  color: var(--accent-500);
+}
+
+.text-accent-600 {
+  color: var(--accent-600);
+}
+
+.text-accent-700 {
+  color: var(--accent-700);
+}
+
+.text-accent-800 {
+  color: var(--accent-800);
+}
+
+.text-accent-900 {
+  color: var(--accent-900);
+}
+
+.text-accent-950 {
+  color: var(--accent-950);
+}
+
+.border-accent {
+  border-color: var(--accent);
+}
+
+.border-accent-50 {
+  border-color: var(--accent-50);
+}
+
+.border-accent-100 {
+  border-color: var(--accent-100);
+}
+
+.border-accent-200 {
+  border-color: var(--accent-200);
+}
+
+.border-accent-300 {
+  border-color: var(--accent-300);
+}
+
+.border-accent-400 {
+  border-color: var(--accent-400);
+}
+
+.border-accent-500 {
+  border-color: var(--accent-500);
+}
+
+.border-accent-600 {
+  border-color: var(--accent-600);
+}
+
+.border-accent-700 {
+  border-color: var(--accent-700);
+}
+
+.border-accent-800 {
+  border-color: var(--accent-800);
+}
+
+.border-accent-900 {
+  border-color: var(--accent-900);
+}
+
+.border-accent-950 {
+  border-color: var(--accent-950);
+}
+
+/* Classes utilitaires pour les ombres */
+.shadow-custom-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-custom-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-custom-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Classes utilitaires pour les bordures */
+.border-light {
+  border-color: var(--border-light);
+}
+
+.border-medium {
+  border-color: var(--border-medium);
+}
+
+.border-strong {
+  border-color: var(--border-strong);
 }
 
 /* Transitions optimisées pour desktop uniquement */
@@ -168,7 +460,7 @@ body {
   
   /* Transitions pour le glass effect sur desktop */
   .glass-effect {
-    transition: background 0.3s ease, border 0.3s ease;
+    transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
   }
   
   /* Transition pour le body sur desktop */
@@ -195,35 +487,63 @@ body {
   background: var(--accent-light);
 }
 
-/* Animation optimisée pour mobile */
-@media (max-width: 768px) {
-  @keyframes pulse {
-    0% {
-      opacity: 0.1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.2;
-      transform: scale(1.03);
-    }
-    100% {
-      opacity: 0.1;
-      transform: scale(1);
-    }
+/* Classes utilitaires pour la responsivité */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
   }
 }
 
-@keyframes pulse {
-  0% {
-    opacity: 0.2;
-    transform: scale(1);
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
   }
-  50% {
-    opacity: 0.3;
-    transform: scale(1.05);
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
   }
-  100% {
-    opacity: 0.2;
-    transform: scale(1);
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Grille responsive */
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

@@ -96,28 +96,61 @@ const Hero = () => {
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden mt-0 pt-0">
       <div ref={containerRef} className="parallax-container h-full w-full">
-        {/* Fluid Background Effect - Simplifié pour mobile */}
+        {/* Fluid Background Effect - Amélioré avec des couleurs plus cohérentes */}
         {!isMobile && (
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="fluid-effect animate-pulse"></div>
-            <div 
+            <div className="absolute inset-0 bg-gradient-to-br from-accent-900/20 to-transparent"></div>
+            <motion.div 
+              className="fluid-effect" 
+              style={{ opacity: 0.3 }}
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.4, 0.3]
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            ></motion.div>
+            <motion.div 
               className="fluid-effect" 
               style={{ 
                 left: '30%', 
-                top: '20%', 
-                animation: 'pulse 8s infinite alternate', 
-                animationDelay: '1s' 
+                top: '20%',
+                background: 'radial-gradient(circle at center, var(--accent-400), var(--accent-900))',
+                opacity: 0.25
               }}
-            ></div>
-            <div 
+              animate={{
+                scale: [1, 1.15, 1],
+                opacity: [0.25, 0.35, 0.25]
+              }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+            ></motion.div>
+            <motion.div 
               className="fluid-effect" 
               style={{ 
                 right: '20%', 
-                bottom: '10%', 
-                animation: 'pulse 7s infinite alternate', 
-                animationDelay: '2s' 
+                bottom: '10%',
+                background: 'radial-gradient(circle at center, var(--accent-500), var(--accent-800))',
+                opacity: 0.2
               }}
-            ></div>
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.2, 0.3, 0.2]
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+            ></motion.div>
           </div>
         )}
 
@@ -137,12 +170,22 @@ const Hero = () => {
               <div className="absolute top-1/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
                 {/* Contenu principal - rendu immédiat sans animation pour améliorer le LCP */}
                 <div className="text-center pointer-events-none">
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                  <motion.h1 
+                    className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                  >
                     <span className="text-gradient">Créateur</span> de Sites Web
-                  </h1>
-                  <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8">
+                  </motion.h1>
+                  <motion.p 
+                    className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                  >
                     Je conçois des expériences web uniques et immersives pour donner vie à vos idées
-                  </p>
+                  </motion.p>
                 </div>
                 
                 {/* Animations appliquées seulement après le chargement initial */}
@@ -165,23 +208,47 @@ const Hero = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
               className="text-center"
             >
               <div className="mt-24 sm:mt-32 md:mt-40 lg:mt-44">
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                  <Link 
-                    href="#contact"
-                    className="bg-accent hover:bg-accent-light text-white font-bold py-2 sm:py-3 px-8 rounded-full transition-colors duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto"
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Me contacter
-                  </Link>
-                  <Link 
-                    href="#portfolio-anchor"
-                    className="glass-effect text-foreground font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto hover:bg-white/10 cursor-pointer pointer-events-auto"
+                    <Link 
+                      href="#contact"
+                      className="bg-accent hover:bg-accent-600 text-white font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2"
+                    >
+                      Me contacter
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="16" 
+                        height="16" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                      </svg>
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    Voir mes projets
-                  </Link>
+                    <Link 
+                      href="#portfolio-anchor"
+                      className="glass-effect text-foreground font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto hover:bg-accent/5 cursor-pointer pointer-events-auto border border-border-light"
+                    >
+                      Voir mes projets
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
