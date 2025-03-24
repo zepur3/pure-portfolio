@@ -198,8 +198,8 @@ const Navbar = () => {
                     href={link.href}
                     className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
                       activeSection === link.href.substring(1)
-                        ? "bg-accent bg-opacity-10 text-accent font-medium"
-                        : "text-foreground hover:bg-opacity-5 hover:bg-foreground hover:text-accent-light"
+                        ? "bg-accent text-white font-medium"
+                        : "hover:bg-foreground hover:bg-opacity-5"
                     }`}
                     onClick={() => {
                       // Fermer le menu mobile
