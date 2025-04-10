@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const Services = () => {
@@ -80,11 +80,22 @@ const Services = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.3,
         ease: "easeOut",
       },
     },
   };
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section id="services" className="section bg-background relative pt-24 md:pt-28">
@@ -93,16 +104,16 @@ const Services = () => {
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8 }}
+            animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
             <span className="text-gradient">Mes</span> Services
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
             Je propose une gamme complète de services pour vous aider à créer une présence en ligne exceptionnelle
@@ -113,7 +124,7 @@ const Services = () => {
           ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={isInView && !isMobile ? "visible" : "visible"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {services.map((service, index) => (
@@ -131,8 +142,8 @@ const Services = () => {
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           className="text-center mt-12"
           data-component-name="Services"
         >
