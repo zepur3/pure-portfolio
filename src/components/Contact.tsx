@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // Définir l'interface pour les données du formulaire
 interface FormData {
@@ -11,6 +12,7 @@ interface FormData {
   message: string;
   timestamp: number;
   honeypot: string;
+  recaptchaToken: string;
 }
 
 const Contact = () => {
@@ -21,22 +23,16 @@ const Contact = () => {
     message: "",
     timestamp: 0,
     honeypot: "", // Champ honeypot pour détecter les bots
+    recaptchaToken: "", // Token reCAPTCHA
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | "success" | "error">(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [csrfToken, setCsrfToken] = useState("");
+  const contactRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.2 });
-
-  // Générer un jeton CSRF et définir le timestamp au chargement du composant
+  // Définir le timestamp au chargement du composant
   useEffect(() => {
-    // Générer un jeton CSRF simple
-    const token = Math.random().toString(36).substring(2, 15) + 
-                 Math.random().toString(36).substring(2, 15);
-    setCsrfToken(token);
-    
     // Définir le timestamp actuel
     setFormData(prev => ({
       ...prev,
@@ -66,41 +62,58 @@ const Contact = () => {
         subject: "", 
         message: "", 
         timestamp: Math.floor(Date.now() / 1000),
-        honeypot: "" 
+        honeypot: "",
+        recaptchaToken: "" 
       });
+      return;
+    }
+    
+    // Vérification du token reCAPTCHA
+    if (!formData.recaptchaToken) {
+      setSubmitStatus("error");
+      setErrorMessage("Veuillez confirmer que vous n'êtes pas un robot");
       return;
     }
     
     setIsSubmitting(true);
     setErrorMessage("");
     
+    // Soumettre le formulaire manuellement pour FormSubmit.co
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://formsubmit.co/contact@asdinfor.ovh';
+    form.style.display = 'none';
+    
+    // Ajouter les champs du formulaire
+    const addField = (name: string, value: string) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
+    
+    // Ajouter tous les champs nécessaires
+    addField('name', formData.name);
+    addField('email', formData.email);
+    addField('subject', formData.subject);
+    addField('message', formData.message);
+    addField('g-recaptcha-response', formData.recaptchaToken);
+    
+    // Options de FormSubmit.co
+    addField('_subject', `Nouveau message: ${formData.subject}`);
+    addField('_template', 'box');
+    addField('_captcha', 'true'); // FormSubmit a aussi son propre captcha
+    addField('_next', window.location.href); // Redirection vers la même page
+    
+    // Ajouter le formulaire au document et le soumettre
+    document.body.appendChild(form);
+    
     try {
-      // Créer un nouvel objet pour l'envoi sans inclure le champ honeypot
-      const dataToSend = {
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        timestamp: formData.timestamp,
-        csrfToken
-      };
+      form.submit();
       
-      // Appeler le script PHP au lieu de l'API Next.js
-      const response = await fetch('/api/contact.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken
-        },
-        body: JSON.stringify(dataToSend),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Une erreur est survenue lors de l\'envoi du message');
-      }
-      
+      // Note: La page sera redirigée, donc ce code ne sera pas exécuté
+      // Mais nous le gardons au cas où la redirection ne se produit pas
       setSubmitStatus("success");
       setFormData({ 
         name: "", 
@@ -108,17 +121,15 @@ const Contact = () => {
         subject: "", 
         message: "", 
         timestamp: Math.floor(Date.now() / 1000),
-        honeypot: "" 
+        honeypot: "",
+        recaptchaToken: "" 
       });
       
-      // Générer un nouveau jeton CSRF après l'envoi réussi
-      const newToken = Math.random().toString(36).substring(2, 15) + 
-                       Math.random().toString(36).substring(2, 15);
-      setCsrfToken(newToken);
     } catch (error) {
       console.error('Erreur:', error);
       setSubmitStatus("error");
       setErrorMessage(error instanceof Error ? error.message : 'Une erreur inconnue est survenue');
+      document.body.removeChild(form);
     } finally {
       setIsSubmitting(false);
       // Réinitialiser le statut après 5 secondes
@@ -173,7 +184,7 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div
-            ref={ref}
+            ref={contactRef}
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -272,6 +283,19 @@ const Contact = () => {
                     placeholder="Votre message"
                     aria-label="Zone de saisie du message"
                   ></textarea>
+                </div>
+                
+                {/* Google reCAPTCHA */}
+                <div className="mb-6">
+                  <ReCAPTCHA
+                    sitekey="6LczdUArAAAAABi76YqiaqUroCbd5BnFMYD8s7-x" // Clé reCAPTCHA directement intégrée
+                    onChange={(token: string | null) => setFormData(prev => ({ ...prev, recaptchaToken: token || "" }))}
+                    className="transform scale-90 origin-left"
+                    theme="dark"
+                  />
+                  <p className="text-xs text-text-secondary mt-2">
+                    Ce site est protégé par reCAPTCHA et la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Politique de confidentialité</a> et les <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Conditions d&apos;utilisation</a> de Google s&apos;appliquent.
+                  </p>
                 </div>
                 
                 <button

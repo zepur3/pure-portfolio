@@ -58,8 +58,10 @@ RewriteRule ^(.*)$ /index.html [L]
   # Force les navigateurs à utiliser HTTPS pour votre domaine
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   
-  # Content Security Policy (CSP) - Version modifiée pour permettre les scripts inline et les polices externes
-  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://ray.st; font-src 'self' data: https://ray.st; img-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://www.google.com;"
+  # Content Security Policy (CSP) - Version sécurisée sans unsafe-inline ni unsafe-eval
+  # Utilisation de nonces pour les scripts essentiels (à générer côté serveur)
+  # Le nonce doit être généré de manière aléatoire pour chaque requête
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;"
   
   # Feature Policy / Permissions Policy
   # Contrôle l'accès aux fonctionnalités du navigateur
