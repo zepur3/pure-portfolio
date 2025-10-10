@@ -49,12 +49,12 @@ const Contact = () => {
   // Définir le timestamp  // Déclarer la fonction globale pour Turnstile
   useEffect(() => {
     // Fonction pour rendre Turnstile après le chargement du script
-    const renderTurnstile = () => {
-      if (typeof window !== 'undefined' && (window as any).turnstile) {
-        (window as any).turnstile.render('.cf-turnstile', {
+    const renderTurnstile = (): void => {
+      if (typeof window !== 'undefined' && window.turnstile) {
+        window.turnstile.render('.cf-turnstile', {
           sitekey: '0x4AAAAAAB5z1s3VURUhqQ3F',
           theme: 'dark',
-          callback: (token: string) => {
+          callback: (token: string): void => {
             setTurnstileToken(token);
           },
         });
