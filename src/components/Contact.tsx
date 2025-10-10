@@ -24,6 +24,7 @@ declare global {
         callback: (token: string) => void;
       }) => string;
     };
+    setHcaptchaToken: (token: string) => void;
   }
 }
 
@@ -43,15 +44,23 @@ const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Configurer hCaptcha - approche simplifiée
+  // Configurer hCaptcha avec gestion du token
   useEffect(() => {
-    // La fonction callback sera appelée automatiquement par hCaptcha
-    // via les attributs data-* du HTML
-
-    // Nettoyer au démontage
-    return () => {
-      // Pas besoin de nettoyage particulier pour cette approche
+    // Fonction de callback globale pour hCaptcha
+    window.setHcaptchaToken = (token: string) => {
+      setHcaptchaToken(token);
+      console.log('hCaptcha token reçu:', token); // Debug
     };
+
+    // Vérifier que hCaptcha est chargé
+    const checkHcaptcha = setInterval(() => {
+      if (typeof window !== 'undefined' && window.hcaptcha) {
+        clearInterval(checkHcaptcha);
+        console.log('hCaptcha chargé'); // Debug
+      }
+    }, 100);
+
+    return () => clearInterval(checkHcaptcha);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -64,6 +73,8 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    console.log('Token hCaptcha actuel:', hcaptchaToken); // Debug
 
     // Vérification du honeypot - si rempli, c'est probablement un bot
     if (formData.honeypot) {
@@ -82,7 +93,8 @@ const Contact = () => {
     }
 
     // Vérification du token hCaptcha
-    if (!hcaptchaToken) {
+    if (!hcaptchaToken || hcaptchaToken.trim() === '') {
+      console.log('Token hCaptcha manquant ou vide');
       setSubmitStatus("error");
       setErrorMessage("Veuillez confirmer que vous n'êtes pas un robot");
       return;
