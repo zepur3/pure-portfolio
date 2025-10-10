@@ -17,6 +17,13 @@ interface FormData {
 // Étendre l'interface Window pour Turnstile
 declare global {
   interface Window {
+    turnstile: {
+      render: (selector: string, config: {
+        sitekey: string;
+        theme: string;
+        callback: (token: string) => void;
+      }) => string;
+    };
     setTurnstileToken: (token: string) => void;
   }
 }
@@ -37,17 +44,32 @@ const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Définir le timestamp au chargement du composant
+  // Définir le timestamp  // Déclarer la fonction globale pour Turnstile
   useEffect(() => {
-    // Définir le timestamp actuel
-    setFormData(prev => ({
-      ...prev,
-      timestamp: Math.floor(Date.now() / 1000)
-    }));
+    // Fonction pour rendre Turnstile après le chargement du script
+    const renderTurnstile = () => {
+      if (typeof window !== 'undefined' && (window as any).turnstile) {
+        (window as any).turnstile.render('.cf-turnstile', {
+          sitekey: '0x4AAAAAAB5z1s3VURUhqQ3F',
+          theme: 'dark',
+          callback: (token: string) => {
+            setTurnstileToken(token);
+          },
+        });
+      }
+    };
 
-    // Déclarer la fonction globale pour Turnstile
-    window.setTurnstileToken = (token: string) => {
-      setTurnstileToken(token);
+    // Attendre que le script soit chargé
+    const checkScript = setInterval(() => {
+      if (document.querySelector('script[src*="challenges.cloudflare.com"]')) {
+        clearInterval(checkScript);
+        renderTurnstile();
+      }
+    }, 100);
+
+    // Nettoyer l'intervalle
+    return () => {
+      clearInterval(checkScript);
     };
   }, []);
 

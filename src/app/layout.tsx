@@ -58,9 +58,9 @@ export default function RootLayout({
         {/* Chargement du script de navigation de manière asynchrone */}
         <script src="/anchor-navigation.js" async defer></script>
         
-        {/* Cloudflare Turnstile */}
+        {/* Cloudflare Turnstile - Script chargé avant le rendu */}
         <script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
           async
           defer
         ></script>
