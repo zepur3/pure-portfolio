@@ -14,17 +14,19 @@ interface FormData {
   honeypot: string;
 }
 
+// Interface pour Turnstile
+interface TurnstileInstance {
+  render: (selector: string, config: {
+    sitekey: string;
+    theme: string;
+    callback: (token: string) => void;
+  }) => string;
+}
+
 // Étendre l'interface Window pour Turnstile
 declare global {
   interface Window {
-    turnstile: {
-      render: (selector: string, config: {
-        sitekey: string;
-        theme: string;
-        callback: (token: string) => void;
-      }) => string;
-    };
-    setTurnstileToken: (token: string) => void;
+    turnstile: TurnstileInstance;
   }
 }
 
