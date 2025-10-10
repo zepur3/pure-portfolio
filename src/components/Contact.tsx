@@ -44,23 +44,31 @@ const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Configurer hCaptcha avec gestion du token
+  // Configurer hCaptcha avec rendu programmatique
   useEffect(() => {
-    // Fonction de callback globale pour hCaptcha
-    window.setHcaptchaToken = (token: string) => {
-      setHcaptchaToken(token);
-      console.log('hCaptcha token reçu:', token); // Debug
+    const initHcaptcha = () => {
+      if (typeof window !== 'undefined' && window.hcaptcha && document.querySelector('.h-captcha')) {
+        window.hcaptcha.render('.h-captcha', {
+          sitekey: '1fced69e-8482-4540-b244-68aa7d769d04',
+          theme: 'dark',
+          callback: (token: string) => {
+            console.log('hCaptcha token reçu:', token);
+            setHcaptchaToken(token);
+          },
+        });
+      }
     };
 
-    // Vérifier que hCaptcha est chargé
-    const checkHcaptcha = setInterval(() => {
-      if (typeof window !== 'undefined' && window.hcaptcha) {
-        clearInterval(checkHcaptcha);
-        console.log('hCaptcha chargé'); // Debug
+    // Attendre que le script soit chargé
+    const checkScript = setInterval(() => {
+      if (document.querySelector('script[src*="hcaptcha"]')) {
+        clearInterval(checkScript);
+        // Petit délai pour s'assurer que hCaptcha est initialisé
+        setTimeout(initHcaptcha, 100);
       }
     }, 100);
 
-    return () => clearInterval(checkHcaptcha);
+    return () => clearInterval(checkScript);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -298,12 +306,7 @@ const Contact = () => {
                 
                 {/* hCaptcha - Protection anti-spam */}
                 <div className="mb-6">
-                  <div
-                    className="h-captcha"
-                    data-sitekey="1fced69e-8482-4540-b244-68aa7d769d04"
-                    data-theme="dark"
-                    data-callback="setHcaptchaToken"
-                  ></div>
+                  <div className="h-captcha"></div>
                   <p className="text-xs text-text-secondary mt-2">
                     Ce site est protégé par hCaptcha pour éviter le spam.
                   </p>
