@@ -58,9 +58,9 @@ export default function RootLayout({
         {/* Chargement du script de navigation de manière asynchrone */}
         <script src="/anchor-navigation.js" async defer></script>
         
-        {/* hCaptcha - Alternative plus simple à Turnstile */}
+        {/* Google reCAPTCHA v2 */}
         <script
-          src="https://js.hcaptcha.com/1/api.js"
+          src="https://www.google.com/recaptcha/api.js"
           async
           defer
         ></script>

@@ -12,19 +12,19 @@ interface FormData {
   message: string;
   timestamp: number;
   honeypot: string;
+  recaptchaToken: string;
 }
 
-// Étendre l'interface Window pour hCaptcha
+// Étendre l'interface Window pour reCAPTCHA
 declare global {
   interface Window {
-    hcaptcha?: {
+    grecaptcha: {
       render: (selector: string, config: {
         sitekey: string;
         theme: string;
         callback: (token: string) => void;
       }) => string;
     };
-    setHcaptchaToken: (token: string) => void;
   }
 }
 
@@ -36,24 +36,25 @@ const Contact = () => {
     message: "",
     timestamp: 0,
     honeypot: "", // Champ honeypot pour détecter les bots
+    recaptchaToken: "", // Token reCAPTCHA
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | "success" | "error">(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [hcaptchaToken, setHcaptchaToken] = useState<string>("");
+  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Configurer hCaptcha avec rendu programmatique
+  // Configurer reCAPTCHA avec rendu programmatique
   useEffect(() => {
-    const initHcaptcha = () => {
-      if (typeof window !== 'undefined' && window.hcaptcha && document.querySelector('.h-captcha')) {
-        window.hcaptcha.render('.h-captcha', {
-          sitekey: '1fced69e-8482-4540-b244-68aa7d769d04',
+    const initRecaptcha = () => {
+      if (typeof window !== 'undefined' && window.grecaptcha && document.querySelector('.g-recaptcha')) {
+        window.grecaptcha.render('.g-recaptcha', {
+          sitekey: 'YOUR_RECAPTCHA_SITE_KEY', // Remplacez par votre vraie clé
           theme: 'dark',
           callback: (token: string) => {
-            console.log('hCaptcha token reçu:', token);
-            setHcaptchaToken(token);
+            console.log('reCAPTCHA token reçu:', token);
+            setFormData(prev => ({ ...prev, recaptchaToken: token }));
           },
         });
       }
@@ -61,10 +62,10 @@ const Contact = () => {
 
     // Attendre que le script soit chargé
     const checkScript = setInterval(() => {
-      if (document.querySelector('script[src*="hcaptcha"]')) {
+      if (document.querySelector('script[src*="recaptcha"]')) {
         clearInterval(checkScript);
-        // Petit délai pour s'assurer que hCaptcha est initialisé
-        setTimeout(initHcaptcha, 100);
+        // Petit délai pour s'assurer que reCAPTCHA est initialisé
+        setTimeout(initRecaptcha, 100);
       }
     }, 100);
 
@@ -82,7 +83,7 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log('Token hCaptcha actuel:', hcaptchaToken); // Debug
+    console.log('Token reCAPTCHA actuel:', recaptchaToken); // Debug
 
     // Vérification du honeypot - si rempli, c'est probablement un bot
     if (formData.honeypot) {
@@ -95,14 +96,15 @@ const Contact = () => {
         subject: "",
         message: "",
         timestamp: Math.floor(Date.now() / 1000),
-        honeypot: ""
+        honeypot: "",
+        recaptchaToken: ""
       });
       return;
     }
 
-    // Vérification du token hCaptcha
-    if (!hcaptchaToken || hcaptchaToken.trim() === '') {
-      console.log('Token hCaptcha manquant ou vide');
+    // Vérification du token reCAPTCHA
+    if (!recaptchaToken || recaptchaToken.trim() === '') {
+      console.log('Token reCAPTCHA manquant ou vide');
       setSubmitStatus("error");
       setErrorMessage("Veuillez confirmer que vous n'êtes pas un robot");
       return;
@@ -141,9 +143,10 @@ const Contact = () => {
         subject: "",
         message: "",
         timestamp: Math.floor(Date.now() / 1000),
-        honeypot: ""
+        honeypot: "",
+        recaptchaToken: ""
       });
-      setHcaptchaToken("");
+      setRecaptchaToken("");
 
     } catch (error) {
       console.error('Erreur:', error);
@@ -304,11 +307,11 @@ const Contact = () => {
                   ></textarea>
                 </div>
                 
-                {/* hCaptcha - Protection anti-spam */}
+                {/* Google reCAPTCHA v2 */}
                 <div className="mb-6">
-                  <div className="h-captcha"></div>
+                  <div className="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
                   <p className="text-xs text-text-secondary mt-2">
-                    Ce site est protégé par hCaptcha pour éviter le spam.
+                    Ce site est protégé par reCAPTCHA pour éviter le spam.
                   </p>
                 </div>
                 
