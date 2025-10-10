@@ -4,6 +4,16 @@ import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import emailjs from '@emailjs/browser';
 
+// Définir l'interface pour les données du formulaire
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  timestamp: number;
+  honeypot: string;
+}
+
 // Étendre l'interface Window pour Turnstile
 declare global {
   interface Window {
