@@ -288,7 +288,7 @@ const Contact = () => {
                 <div className="mb-6">
                   <div
                     className="h-captcha"
-                    data-sitekey="10000000-ffff-ffff-ffff-000000000001"
+                    data-sitekey="1fced69e-8482-4540-b244-68aa7d769d04"
                     data-theme="dark"
                     data-callback="setHcaptchaToken"
                   ></div>
