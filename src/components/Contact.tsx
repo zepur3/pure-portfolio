@@ -14,21 +14,18 @@ interface FormData {
   honeypot: string;
 }
 
-// Interface pour Turnstile
-interface TurnstileInstance {
-  render: (selector: string, config: {
-    sitekey: string;
-    theme: string;
-    callback: (token: string) => void;
-  }) => string;
-}
-
-// Étendre l'interface Window pour Turnstile
-declare global {
-  interface Window {
-    turnstile: TurnstileInstance;
+  // Étendre l'interface Window pour Turnstile
+  declare global {
+    interface Window {
+      turnstile: {
+        render: (selector: string, config: {
+          sitekey: string;
+          theme: string;
+          callback: (token: string) => void;
+        }) => string;
+      };
+    }
   }
-}
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -46,32 +43,14 @@ const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Définir le timestamp  // Déclarer la fonction globale pour Turnstile
+  // Configurer Turnstile - approche simplifiée
   useEffect(() => {
-    // Fonction pour rendre Turnstile après le chargement du script
-    const renderTurnstile = (): void => {
-      if (typeof window !== 'undefined' && window.turnstile) {
-        window.turnstile.render('.cf-turnstile', {
-          sitekey: '0x4AAAAAAB5z1s3VURUhqQ3F',
-          theme: 'dark',
-          callback: (token: string): void => {
-            setTurnstileToken(token);
-          },
-        });
-      }
-    };
+    // La fonction callback sera appelée automatiquement par Turnstile
+    // via les attributs data-* du HTML
 
-    // Attendre que le script soit chargé
-    const checkScript = setInterval(() => {
-      if (document.querySelector('script[src*="challenges.cloudflare.com"]')) {
-        clearInterval(checkScript);
-        renderTurnstile();
-      }
-    }, 100);
-
-    // Nettoyer l'intervalle
+    // Nettoyer au démontage
     return () => {
-      clearInterval(checkScript);
+      // Pas besoin de nettoyage particulier pour cette approche
     };
   }, []);
 
