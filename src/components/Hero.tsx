@@ -4,6 +4,7 @@ import { useEffect, useRef, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
+import TypingText from "./TypingText";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -176,7 +177,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                   >
-                    <span className="text-gradient">Créateur</span> de Sites Web
+                    <span className="text-gradient">Développeur Web</span> Augmenté par IA
                   </motion.h1>
                   <motion.p 
                     className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
@@ -184,7 +185,7 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                   >
-                    Je conçois des expériences web uniques et immersives pour donner vie à vos idées
+                    <TypingText text="En formation continue, j'apprends le développement web avec l'IA et aspire à devenir technicien systèmes et réseaux." speed={32} className="inline-block" />
                   </motion.p>
                 </div>
                 
@@ -195,7 +196,13 @@ const Hero = () => {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="absolute inset-0 z-0 pointer-events-none"
-                  />
+                  >
+                    {/* Particules flottantes - ajustées pour le mode clair */}
+                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
+                    <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
+                    <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
+                    <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
+                  </motion.div>
                 )}
               </div>
             )}
@@ -204,22 +211,37 @@ const Hero = () => {
 
         {/* Couche interactive pour les boutons avec un z-index très élevé */}
         <div className="absolute inset-0 z-30 pointer-events-none">
-          <div className="absolute top-2/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.6 }}
               className="text-center"
             >
-              <div className="mt-24 sm:mt-32 md:mt-40 lg:mt-44">
+              <div className="mt-48 sm:mt-56 md:mt-64 lg:mt-72">
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                   <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.93 }}
                   >
                     <Link 
                       href="#contact"
-                      className="bg-accent hover:bg-accent-600 text-white font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2"
+                      className="bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2 ripple-effect glow-effect"
+                      style={{ position: 'relative', overflow: 'hidden' }}
+                      onMouseDown={e => {
+                        const btn = e.currentTarget;
+                        const circle = document.createElement('span');
+                        const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+                        const radius = diameter / 2;
+                        circle.style.width = circle.style.height = `${diameter}px`;
+                        circle.style.left = `${e.nativeEvent.offsetX - radius}px`;
+                        circle.style.top = `${e.nativeEvent.offsetY - radius}px`;
+                        circle.className = 'ripple';
+                        btn.appendChild(circle);
+                        setTimeout(() => {
+                          circle.remove();
+                        }, 600);
+                      }}
                     >
                       Me contacter
                       <svg 

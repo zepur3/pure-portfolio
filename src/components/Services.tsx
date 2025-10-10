@@ -14,35 +14,17 @@ const Services = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      title: "Création de Sites Web",
-      description: "Conception et développement de sites web modernes, réactifs et optimisés pour tous les appareils."
+      title: "Sites Web Vitrines",
+      description: "Création de sites web modernes avec l'assistance de l'IA pour les petites entreprises et artisans."
     },
     {
       icon: (
         <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
         </svg>
       ),
-      title: "Design UI/UX",
-      description: "Création d'interfaces utilisateur intuitives et d'expériences utilisateur engageantes pour captiver votre audience."
-    },
-    {
-      icon: (
-        <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-      title: "Sites Performants",
-      description: "Optimisation de la vitesse et des performances pour offrir une expérience utilisateur fluide et rapide."
-    },
-    {
-      icon: (
-        <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-        </svg>
-      ),
-      title: "Applications Web",
-      description: "Développement d'applications web dynamiques et interactives avec les technologies modernes."
+      title: "Développement Assisté par IA",
+      description: "Utilisation d'outils d'IA pour accélérer le développement et améliorer la qualité du code."
     },
     {
       icon: (
@@ -50,17 +32,35 @@ const Services = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       ),
-      title: "Développement Front-end",
-      description: "Création d'interfaces utilisateur réactives et interactives avec les dernières technologies front-end."
+      title: "Intégration Front-end",
+      description: "Intégration de designs en sites web fonctionnels avec React, Next.js et Tailwind CSS."
     },
     {
       icon: (
         <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       ),
-      title: "SEO & Accessibilité",
-      description: "Optimisation pour les moteurs de recherche et mise en place des meilleures pratiques d'accessibilité."
+      title: "Gestion de Projets GitHub",
+      description: "Versionnement et collaboration sur GitHub pour un suivi professionnel des projets."
+    },
+    {
+      icon: (
+        <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      ),
+      title: "Apprentissage Continu",
+      description: "En formation constante sur les technologies web et les systèmes & réseaux."
+    },
+    {
+      icon: (
+        <svg className="w-12 h-12 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        </svg>
+      ),
+      title: "Systèmes & Réseaux",
+      description: "Objectif professionnel : devenir technicien systèmes et réseaux. Recherche d'alternance."
     }
   ];
 
@@ -108,7 +108,7 @@ const Services = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
-            <span className="text-gradient">Mes</span> Services
+            <span className="text-gradient">Mes</span> Compétences
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ const Services = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
-            Je propose une gamme complète de services pour vous aider à créer une présence en ligne exceptionnelle
+            Découvrez mes compétences en développement web et mon parcours vers les systèmes et réseaux
           </motion.p>
         </div>
 
@@ -149,10 +149,10 @@ const Services = () => {
         >
           <a
             href="#contact"
-            className="bg-accent hover:bg-accent-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 shadow-md hover:shadow-lg relative z-10"
+            className="bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 shadow-md hover:shadow-lg glow-effect relative z-10"
             data-component-name="Services"
           >
-            Discutons de votre projet
+            Me contacter pour une opportunité
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               width="16" 

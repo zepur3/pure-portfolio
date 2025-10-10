@@ -15,18 +15,18 @@
   --background: #0f0f0f;
   --foreground: #ffffff;
   
-  /* Palette d'accent */
-  --accent-50: #f5f3ff;
-  --accent-100: #ede9fe;
-  --accent-200: #ddd6fe;
-  --accent-300: #c4b5fd;
-  --accent-400: #a78bfa;
-  --accent-500: #8b5cf6;
-  --accent-600: #7c3aed;
-  --accent-700: #6d28d9;
-  --accent-800: #5b21b6;
-  --accent-900: #4c1d95;
-  --accent-950: #2e1065;
+  /* Palette d'accent - Dégradé bleu-violet moderne */
+  --accent-50: #f0f4ff;
+  --accent-100: #e0e9ff;
+  --accent-200: #c7d9ff;
+  --accent-300: #9bb8ff;
+  --accent-400: #6d96ff;
+  --accent-500: #3b7cff;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
+  --accent-950: #172554;
   
   /* Raccourcis pour la compatibilité */
   --accent: var(--accent-700);
@@ -77,8 +77,23 @@ html.light {
   --background: #ffffff;
   --foreground: #0f0f0f;
   
-  /* Palette d'accent - identique pour cohérence de marque */
-  /* Les nuances d'accent restent les mêmes */
+  /* Palette d'accent - Bleu-violet moderne pour le mode clair aussi */
+  --accent-50: #f0f4ff;
+  --accent-100: #e0e9ff;
+  --accent-200: #c7d9ff;
+  --accent-300: #9bb8ff;
+  --accent-400: #6d96ff;
+  --accent-500: #3b7cff;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+  --accent-800: #1e40af;
+  --accent-900: #1e3a8a;
+  --accent-950: #172554;
+  
+  /* Raccourcis pour la compatibilité */
+  --accent: var(--accent-700);
+  --accent-light: var(--accent-500);
+  --accent-dark: var(--accent-900);
   
   /* Textes */
   --text-primary: var(--gray-900);
@@ -174,10 +189,20 @@ body {
 
 /* Styles critiques pour le LCP - Priorité haute */
 .text-gradient {
-  background: linear-gradient(to right, var(--accent-500), var(--accent-700));
+  background: linear-gradient(135deg, #3b7cff, #1d4ed8, #1e40af);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite alternate;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 /* Styles pour les composants principaux - Priorité haute */
@@ -417,17 +442,61 @@ html.light .glass-effect {
   box-shadow: var(--shadow-lg);
 }
 
-/* Classes utilitaires pour les bordures */
-.border-light {
-  border-color: var(--border-light);
+/* Effets de glow modernes avec la nouvelle palette - adaptés pour le mode clair */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(59, 124, 255, 0.3), 0 0 40px rgba(29, 78, 216, 0.2);
+  transition: box-shadow 0.3s ease;
 }
 
-.border-medium {
-  border-color: var(--border-medium);
+.glow-effect:hover {
+  box-shadow: 0 0 30px rgba(59, 124, 255, 0.5), 0 0 60px rgba(29, 78, 216, 0.3);
 }
 
-.border-strong {
-  border-color: var(--border-strong);
+/* Effets de glow ajustés pour le mode clair */
+html.light .glow-effect {
+  box-shadow: 0 0 20px rgba(59, 124, 255, 0.2), 0 0 40px rgba(29, 78, 216, 0.15);
+}
+
+html.light .glow-effect:hover {
+  box-shadow: 0 0 30px rgba(59, 124, 255, 0.3), 0 0 60px rgba(29, 78, 216, 0.2);
+}
+
+/* Dégradé pour les bordures animées */
+.animated-border {
+  position: relative;
+  background: linear-gradient(90deg, transparent, var(--accent-400), transparent);
+  background-size: 200% 100%;
+  animation: border-shine 2s infinite;
+}
+
+/* Animations de délai pour les particules */
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+/* Particules ajustées pour le mode clair */
+html.light .animate-pulse {
+  opacity: 0.3 !important;
+}
+
+html.light .animate-pulse.animation-delay-1000 {
+  opacity: 0.2 !important;
+}
+
+html.light .animate-pulse.animation-delay-2000 {
+  opacity: 0.25 !important;
+}
+
+html.light .animate-pulse.animation-delay-3000 {
+  opacity: 0.15 !important;
 }
 
 /* Transitions optimisées pour desktop uniquement */

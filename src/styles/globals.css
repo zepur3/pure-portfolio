@@ -1,0 +1,26 @@
+/* Ajout de l'effet ripple pour les boutons */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  background: rgba(255,255,255,0.4);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Effet de curseur clignotant pour le TypingText */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}

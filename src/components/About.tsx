@@ -32,7 +32,8 @@ const About = () => {
 
   const skills = [
     "HTML/CSS", "JavaScript", "React", "Next.js", "Tailwind CSS", 
-    "Node.js", "UI/UX Design", "Responsive Design", "SEO", "Performance"
+    "Développement assisté par IA", "Git/GitHub", "Responsive Design", 
+    "Systèmes & Réseaux (en formation)", "Apprentissage continu"
   ];
 
   return (
@@ -72,14 +73,15 @@ const About = () => {
                 <span className="text-gradient">À propos</span> de moi
               </h2>
               <p className="text-text-secondary mb-6 leading-relaxed">
-                Je suis un développeur web passionné par la création d&apos;expériences web immersives et interactives. 
-                Avec plusieurs années d&apos;expérience dans le développement web, je me spécialise dans la 
-                conception de sites web modernes, réactifs et performants.
+                Passionné par les technologies, j&apos;explore le développement web en m&apos;appuyant sur l&apos;intelligence artificielle 
+                comme outil d&apos;apprentissage et d&apos;assistance. Cette approche moderne me permet de créer des sites web fonctionnels 
+                tout en développant mes compétences techniques de manière concrète.
               </p>
               <p className="text-text-secondary mb-8 leading-relaxed">
-                Mon objectif est de transformer vos idées en réalités numériques captivantes qui non seulement 
-                impressionnent visuellement, mais offrent également une expérience utilisateur exceptionnelle.
-                Je m&apos;engage à créer des solutions sur mesure qui répondent parfaitement à vos besoins et objectifs.
+                Mon objectif professionnel est de devenir <strong className="text-accent">technicien systèmes et réseaux</strong>. 
+                Le développement web constitue pour moi une excellente base pour comprendre les infrastructures numériques et 
+                acquérir une vision globale des technologies. Je suis actuellement à la recherche d&apos;une opportunité en alternance 
+                ou en formation pour concrétiser ce projet professionnel.
               </p>
               
               <div className="mb-8" data-component-name="About">
@@ -102,7 +104,7 @@ const About = () => {
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-accent hover:bg-accent-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 shadow-md hover:shadow-lg"
+                className="bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 inline-flex items-center gap-2 shadow-md hover:shadow-lg glow-effect"
               >
                 Me contacter
                 <svg 
@@ -146,7 +148,7 @@ const About = () => {
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                    <span className="text-xs font-medium">Disponible pour des projets</span>
+                    <span className="text-xs font-medium">Recherche alternance/formation</span>
                   </div>
                 </div>
               </div>

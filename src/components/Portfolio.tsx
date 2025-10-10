@@ -12,58 +12,52 @@ const Portfolio = () => {
   const categories = [
     { id: "all", name: "Tous" },
     { id: "web", name: "Sites Web" },
-    { id: "app", name: "Applications" },
-    { id: "design", name: "Design" },
   ];
 
   const projects = [
     {
       id: 1,
-      title: "Site E-commerce",
+      title: "Premier Site Web",
       category: "web",
-      image: "/images/portfolio/ecommerce-website.svg",
-      description: "Site e-commerce moderne avec panier d'achat et paiement en ligne.",
-      link: "#",
+      image: "/images/portfolio/premier-site.png",
+      description: "Mon tout premier site web créé entièrement à la main en HTML, CSS et JavaScript pur. Point de départ de mon apprentissage.",
+      link: "https://premier-site-drab.vercel.app/index.html",
+      github: "https://github.com/zepur3/premier-site",
+      status: "En ligne",
+      tech: "HTML/CSS/JS",
     },
     {
       id: 2,
-      title: "Application de Gestion",
-      category: "app",
-      image: "/images/portfolio/management-app.svg",
-      description: "Application web pour la gestion de projets et d'équipes.",
-      link: "#",
+      title: "MAM Project",
+      category: "web",
+      image: "/images/portfolio/mam.png",
+      description: "Site web moderne développé avec Next.js. Projet complet avec navigation, galerie et formulaire de contact.",
+      link: "https://mam-project-six.vercel.app/",
+      github: "https://github.com/zepur3/mam-project",
+      status: "En ligne",
+      tech: "Next.js",
     },
     {
       id: 3,
-      title: "Site Vitrine Entreprise",
+      title: "Élagage Pro",
       category: "web",
-      image: "/images/portfolio/corporate-website.svg",
-      description: "Site vitrine élégant pour une entreprise de services.",
-      link: "#",
+      image: "/images/portfolio/elagage-pro.png",
+      description: "Site vitrine professionnel pour une entreprise d'élagage. Design moderne et responsive.",
+      link: "https://elagage-pro.vercel.app/",
+      github: "https://github.com/zepur3/elagage-pro",
+      status: "En ligne",
+      tech: "Next.js",
     },
     {
       id: 4,
-      title: "Design UI/UX",
-      category: "design",
-      image: "/images/portfolio/ui-design.svg",
-      description: "Conception d'interface utilisateur pour une application mobile.",
-      link: "#",
-    },
-    {
-      id: 5,
-      title: "Blog Personnel",
+      title: "Ranch Légumes",
       category: "web",
-      image: "/images/portfolio/blog-website.svg",
-      description: "Blog personnel avec système de gestion de contenu.",
-      link: "#",
-    },
-    {
-      id: 6,
-      title: "Application Mobile",
-      category: "app",
-      image: "/images/portfolio/mobile-app.svg",
-      description: "Application mobile pour le suivi de fitness et de santé.",
-      link: "#",
+      image: "/images/portfolio/ranch.png",
+      description: "Site web pour un ranch de légumes bio. Interface claire et intuitive développée avec Next.js.",
+      link: "https://ranch-legumes.vercel.app/",
+      github: "https://github.com/zepur3/ranch-legumes",
+      status: "En ligne",
+      tech: "Next.js",
     },
   ];
 
@@ -108,7 +102,7 @@ const Portfolio = () => {
               transition={{ duration: 0.8 }}
               className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
             >
-              <span className="text-gradient">Mon</span> Portfolio
+              <span className="text-gradient">Mes</span> Projets
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -116,7 +110,7 @@ const Portfolio = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-sm sm:text-base text-text-secondary max-w-2xl mx-auto"
             >
-              Découvrez une sélection de mes projets récents qui démontrent mon expertise et ma créativité
+              Projets réels déployés sur Vercel. Développés avec l&apos;assistance de l&apos;IA.
             </motion.p>
           </div>
 
@@ -152,50 +146,40 @@ const Portfolio = () => {
               <motion.div
                 key={project.id}
                 variants={itemVariants}
-                className="glass-effect rounded-xl overflow-hidden group transition-all duration-500"
+                className="glass-effect rounded-xl overflow-hidden group transition-all duration-500 shadow-custom-sm hover:shadow-custom-lg motion-safe:hover:scale-105 motion-safe:active:scale-98 glow-effect"
               >
-                <div className="relative h-48 sm:h-60 overflow-hidden">
+                <div className="relative overflow-hidden rounded-t-xl aspect-video">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    style={{ objectFit: "cover" }}
-                    className="transition-all duration-700 ease-in-out group-hover:scale-105"
+                    className="object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
                   />
                   <div 
-                    className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-20 transition-all duration-700 ease-in-out"
+                    className="absolute inset-0 bg-accent/60 opacity-0 group-hover:opacity-30 transition-all duration-700 ease-in-out backdrop-blur-sm"
                     data-component-name="Portfolio"
                   ></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700 ease-in-out">
-                    <span className="px-3 py-1 sm:px-4 sm:py-2 bg-background/80 text-text-primary rounded-md font-medium transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 ease-in-out">
-                      Voir le projet
-                    </span>
+                </div>
+                <motion.a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block p-4 sm:p-6 transition-all duration-500 group-hover:bg-background/70 group-hover:backdrop-blur-md cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold transition-all duration-500 group-hover:text-accent group-hover:scale-105 group-hover:tracking-wide">{project.title}</h3>
+                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-500 rounded-full">En ligne</span>
                   </div>
-                </div>
-                <div className="p-4 sm:p-6 transition-all duration-500 group-hover:bg-background/50">
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 transition-all duration-500 group-hover:text-accent">{project.title}</h3>
-                  <p className="text-sm sm:text-base text-text-secondary mb-4">{project.description}</p>
-                  <a
-                    href={project.link}
-                    className="text-accent hover:text-accent-light transition-colors duration-500 inline-flex items-center"
-                  >
-                    En savoir plus
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
+                  <p className="text-sm sm:text-base text-text-secondary mb-3">{project.description}</p>
+                  <div className="flex items-center text-accent font-semibold">
+                    <span>Voir le site</span>
+                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                  </a>
-                </div>
+                  </div>
+                </motion.a>
               </motion.div>
             ))}
           </motion.div>

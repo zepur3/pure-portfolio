@@ -58,14 +58,12 @@ export default function RootLayout({
         {/* Chargement du script de navigation de manière asynchrone */}
         <script src="/anchor-navigation.js" async defer></script>
         
-        {/* Préchargement de la police Mona Sans */}
-        <link 
-          rel="preload" 
-          href="/fonts/Mona-Sans.woff2" 
-          as="font" 
-          type="font/woff2" 
-          crossOrigin="anonymous" 
-        />
+        {/* Cloudflare Turnstile */}
+        <script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
+        ></script>
         
         {/* Styles critiques injectés directement pour éviter le blocage du rendu */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
