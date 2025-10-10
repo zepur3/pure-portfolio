@@ -58,9 +58,9 @@ export default function RootLayout({
         {/* Chargement du script de navigation de manière asynchrone */}
         <script src="/anchor-navigation.js" async defer></script>
         
-        {/* Cloudflare Turnstile - Script chargé avant le rendu */}
+        {/* hCaptcha - Alternative plus simple à Turnstile */}
         <script
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+          src="https://js.hcaptcha.com/1/api.js"
           async
           defer
         ></script>

@@ -14,18 +14,18 @@ interface FormData {
   honeypot: string;
 }
 
-  // Étendre l'interface Window pour Turnstile
-  declare global {
-    interface Window {
-      turnstile: {
-        render: (selector: string, config: {
-          sitekey: string;
-          theme: string;
-          callback: (token: string) => void;
-        }) => string;
-      };
-    }
+// Étendre l'interface Window pour hCaptcha
+declare global {
+  interface Window {
+    hcaptcha?: {
+      render: (selector: string, config: {
+        sitekey: string;
+        theme: string;
+        callback: (token: string) => void;
+      }) => string;
+    };
   }
+}
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -39,13 +39,13 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<null | "success" | "error">(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [hcaptchaToken, setHcaptchaToken] = useState<string>("");
   const contactRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(contactRef, { once: false, margin: "-100px" });
 
-  // Configurer Turnstile - approche simplifiée
+  // Configurer hCaptcha - approche simplifiée
   useEffect(() => {
-    // La fonction callback sera appelée automatiquement par Turnstile
+    // La fonction callback sera appelée automatiquement par hCaptcha
     // via les attributs data-* du HTML
 
     // Nettoyer au démontage
@@ -81,8 +81,8 @@ const Contact = () => {
       return;
     }
 
-    // Vérification du token Turnstile
-    if (!turnstileToken) {
+    // Vérification du token hCaptcha
+    if (!hcaptchaToken) {
       setSubmitStatus("error");
       setErrorMessage("Veuillez confirmer que vous n'êtes pas un robot");
       return;
@@ -123,7 +123,7 @@ const Contact = () => {
         timestamp: Math.floor(Date.now() / 1000),
         honeypot: ""
       });
-      setTurnstileToken("");
+      setHcaptchaToken("");
 
     } catch (error) {
       console.error('Erreur:', error);
@@ -284,16 +284,16 @@ const Contact = () => {
                   ></textarea>
                 </div>
                 
-                {/* Cloudflare Turnstile */}
+                {/* hCaptcha - Protection anti-spam */}
                 <div className="mb-6">
                   <div
-                    className="cf-turnstile"
-                    data-sitekey="0x4AAAAAAB5z1s3VURUhqQ3F"
+                    className="h-captcha"
+                    data-sitekey="10000000-ffff-ffff-ffff-000000000001"
                     data-theme="dark"
-                    data-callback="setTurnstileToken"
+                    data-callback="setHcaptchaToken"
                   ></div>
                   <p className="text-xs text-text-secondary mt-2">
-                    Ce site est protégé par Cloudflare Turnstile pour éviter le spam.
+                    Ce site est protégé par hCaptcha pour éviter le spam.
                   </p>
                 </div>
                 
