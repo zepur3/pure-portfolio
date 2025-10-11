@@ -6,11 +6,5 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- Vérification Google Search Console -->
-  <url>
-    <loc>https://pure-portfolio.vercel.app/google122550ed83dfa4db.html</loc>
-    <lastmod>2025-03-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.1</priority>
-  </url>
+  <!-- Google Search Console Verification: google122550ed83dfa4db.html -->
 </urlset>
