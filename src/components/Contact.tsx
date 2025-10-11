@@ -259,11 +259,17 @@ const Contact = () => {
                 </div>
                 
                 <div className="mb-4">
-                  <ReCAPTCHA
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-                    onChange={setRecaptchaToken}
-                    className="relative z-40"
-                  />
+                  {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                    <ReCAPTCHA
+                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                      onChange={setRecaptchaToken}
+                      className="relative z-40"
+                    />
+                  ) : (
+                    <div className="bg-red-500/20 border border-red-500/30 text-red-500 p-4 rounded-lg">
+                      ⚠️ Clé reCAPTCHA non configurée. Veuillez vérifier votre fichier .env.local
+                    </div>
+                  )}
                 </div>
                 
                 <div className="mb-6">
