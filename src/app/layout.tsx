@@ -54,7 +54,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        <meta name="google-site-verification" content="google122550ed83dfa4db.html" />
         {/* Chargement du script de navigation de manière asynchrone */}
         <script src="/anchor-navigation.js" async defer></script>
         
