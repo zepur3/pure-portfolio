@@ -5,11 +5,12 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
 import TypingText from "./TypingText";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useIsMobile();
   
   // Créer les références en dehors de tout callback
   const layer0Ref = useRef<HTMLDivElement>(null);
@@ -21,21 +22,8 @@ const Hero = () => {
   // Créer un tableau de références avec useMemo pour éviter les re-rendus inutiles
   const layerRefs = useMemo(() => [layer0Ref, layer1Ref, layer2Ref, layer3Ref, layer4Ref], []);
 
-  // Détection de mobile
   useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone/g.test(userAgent);
-      setIsMobile(isMobileDevice || window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    
-    // Marquer le composant comme chargé
     setIsLoaded(true);
-    
-    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Effet de parallaxe - désactivé ou simplifié sur mobile
@@ -265,7 +253,7 @@ const Hero = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Link 
-                      href="#portfolio-anchor"
+                      href="#portfolio"
                       className="glass-effect text-foreground font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto hover:bg-accent/5 cursor-pointer pointer-events-auto border border-border-light"
                     >
                       Voir mes projets

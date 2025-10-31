@@ -57,7 +57,7 @@ const Navbar = () => {
     { name: "Accueil", href: "#home" },
     { name: "À propos", href: "#about" },
     { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio-anchor" },
+    { name: "Portfolio", href: "#portfolio" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -176,7 +176,7 @@ const Navbar = () => {
               duration: 0.3,
               ease: "easeInOut"
             }}
-            className="md:hidden glass-effect mt-2 mx-4 rounded-lg overflow-hidden mobile-menu"
+            className={`md:hidden glass-effect mt-2 mx-4 rounded-lg overflow-hidden mobile-menu ${isOpen ? "open" : ""}`}
           >
             <motion.div 
               className="flex flex-col space-y-4 py-4 px-4"

@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Services = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,16 +87,7 @@ const Services = () => {
     },
   };
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
     <section id="services" className="section bg-background relative pt-24 md:pt-28">

@@ -55,9 +55,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="google-site-verification" content="Ys8DT1cQZg3_AVmu0k8FpYll04NpwrnJG7YKLgvUL_c" />
-        {/* Chargement du script de navigation de manière asynchrone */}
-        <script src="/anchor-navigation.js" async defer></script>
-        
         {/* Google reCAPTCHA v2 */}
         <script
           src="https://www.google.com/recaptcha/api.js"

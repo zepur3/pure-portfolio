@@ -1,27 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface FluidEffectProps {
   className?: string;
 }
 
 const FluidEffect = ({ className = "" }: FluidEffectProps) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Détection de mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone/g.test(userAgent);
-      setIsMobile(isMobileDevice || window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   // Au lieu d'utiliser un canvas, on utilise simplement des div avec des effets CSS
   return (

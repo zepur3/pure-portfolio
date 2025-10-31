@@ -87,12 +87,10 @@ const Portfolio = () => {
   };
 
   return (
-    <>
-      {/* Ancre invisible placée avant la section pour un meilleur ciblage */}
-      <div id="portfolio-anchor" style={{ position: 'relative', top: '100px', visibility: 'hidden', height: 0 }}></div>
-      
-      {/* Section portfolio sans ID d'ancre */}
-      <section className="section bg-background relative pt-12 sm:pt-16 pb-16 sm:pb-24">
+    <section
+      id="portfolio"
+      className="section bg-background relative pt-12 sm:pt-16 pb-16 sm:pb-24 scroll-mt-28"
+    >
         <div className="fluid-effect opacity-10 absolute top-1/2 right-1/4"></div>
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12 sm:mb-16">
@@ -185,7 +183,6 @@ const Portfolio = () => {
           </motion.div>
         </div>
       </section>
-    </>
   );
 };
 

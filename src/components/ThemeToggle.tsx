@@ -19,12 +19,10 @@ const ThemeToggle = () => {
       setTheme(storedTheme);
       // Appliquer le thème au chargement
       document.documentElement.classList.toggle("light", storedTheme === "light");
-      console.log("Theme initial:", storedTheme, "Light class:", document.documentElement.classList.contains("light"));
     } else {
       // Par défaut, utiliser le mode sombre
       setTheme("dark");
       document.documentElement.classList.remove("light");
-      console.log("Theme par défaut: dark");
     }
   }, []);
 
@@ -41,8 +39,6 @@ const ThemeToggle = () => {
     } else {
       document.documentElement.classList.remove("light");
     }
-    
-    console.log("Theme changé:", newTheme, "Light class:", document.documentElement.classList.contains("light"));
     
     // Ajouter une classe temporaire pour l'animation de transition
     document.documentElement.classList.add("theme-transition");
