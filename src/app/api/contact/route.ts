@@ -30,6 +30,19 @@ const REQUIRED_ENV_VARS = [
   "RECAPTCHA_SECRET_KEY",
 ] as const;
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_SITE_URL ?? "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 function validateEnv() {
   const missing = REQUIRED_ENV_VARS.filter((key) => !process.env[key]);
   if (missing.length > 0) {
@@ -104,7 +117,7 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json(
         { success: false, error: "Trop de tentatives. Veuillez réessayer plus tard." },
-        { status: 429 }
+        { status: 429, headers: corsHeaders }
       );
     }
 
@@ -114,12 +127,12 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json(
         { success: false, error: "Corps de requête invalide" },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
     if (payload.honeypot) {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json({ success: true }, { status: 200, headers: corsHeaders });
     }
 
     const minSubmissionTime = Number(process.env.MIN_SUBMISSION_TIME ?? 3);
@@ -128,7 +141,7 @@ export async function POST(request: Request) {
       if (elapsed < minSubmissionTime) {
         return NextResponse.json(
           { success: false, error: "Soumission trop rapide, merci de réessayer." },
-          { status: 400 }
+          { status: 400, headers: corsHeaders }
         );
       }
     }
@@ -137,7 +150,7 @@ export async function POST(request: Request) {
     if (validationErrors.length > 0) {
       return NextResponse.json(
         { success: false, error: validationErrors.join(", ") },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -145,7 +158,7 @@ export async function POST(request: Request) {
     if (!recaptchaOk) {
       return NextResponse.json(
         { success: false, error: "Vérification reCAPTCHA échouée." },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -176,12 +189,12 @@ export async function POST(request: Request) {
       html: htmlMessage,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: corsHeaders });
   } catch (error) {
     console.error("Erreur API contact:", error);
     return NextResponse.json(
       { success: false, error: "Une erreur est survenue lors de l'envoi du message." },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     );
   }
 }
