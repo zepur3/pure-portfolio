@@ -1,11 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// Importer la feuille de style Mona-Sans au lieu de l'inclure manuellement
-import "../styles/mona-sans.css";
+
+import ThemeProvider from "@/components/ThemeProvider";
+
 import fs from 'fs';
 import path from 'path';
 import Script from 'next/script';
+
+const SITE_URL = "https://asdinfor.ovh";
+const SITE_NAME = "ASD Infor";
+const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en formation`;
+const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,18 +34,97 @@ const criticalCss = fs.existsSync(criticalCssPath)
   : '';
 
 export const metadata: Metadata = {
-  title: "Portfolio | Créateur de Sites Web Professionnels",
-  description: "Portfolio professionnel présentant mes projets, services de création de sites web et permettant de me contacter pour vos projets.",
-  keywords: ["portfolio", "développeur web", "création de site", "web design", "freelance"],
-  authors: [{ name: "Votre Nom" }],
-  icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-    ],
-    apple: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    SITE_NAME,
+    "portfolio technicien systèmes réseaux",
+    "projets web étudiant",
+    "alternance systèmes et réseaux",
+    "formation développement web",
+    "optimisation SEO",
+    "asdinfor.ovh",
+  ],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "portfolio",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/opengraph-image",
+        type: "image/png",
+        alt: `${SITE_NAME} – Création de sites web et solutions numériques`,
+        width: 1200,
+        height: 630,
+      },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/opengraph-image",
+        alt: `${SITE_NAME} – Création de sites web et solutions numériques`,
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  verification: {
+    google: "Ys8DT1cQZg3_AVmu0k8FpYll04NpwrnJG7YKLgvUL_c",
+  },
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    shortcut: ["/favicon.svg"],
+    apple: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    other: [
+      { rel: "mask-icon", url: "/favicon.svg", color: "#6d28d9" },
+    ],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.svg`,
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -48,19 +133,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/logo.svg" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <meta name="google-site-verification" content="Ys8DT1cQZg3_AVmu0k8FpYll04NpwrnJG7YKLgvUL_c" />
         {/* Google reCAPTCHA v2 */}
         <script
           src="https://www.google.com/recaptcha/api.js"
           async
           defer
         ></script>
+        <Script
+          id="organization-json-ld"
+          strategy="beforeInteractive"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         
         {/* Styles critiques injectés directement pour éviter le blocage du rendu */}
         <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
@@ -75,7 +166,9 @@ export default function RootLayout({
           strategy="beforeInteractive"
           src="/theme-init.js"
         />
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

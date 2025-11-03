@@ -26,12 +26,9 @@ interface ThemeProviderProps {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Commencer avec un état non défini pour éviter les erreurs d'hydratation
   const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
 
   // Initialiser le thème une fois que le composant est monté côté client
   useEffect(() => {
-    setMounted(true);
-    
     // Vérifier la préférence dans localStorage
     const storedTheme = localStorage.getItem("theme") as Theme | null;
     
@@ -70,10 +67,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   };
 
   // Ne rien afficher pendant le rendu côté serveur pour éviter les erreurs d'hydratation
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
   return (
     <ThemeContext.Provider value={contextValue}>
       {children}

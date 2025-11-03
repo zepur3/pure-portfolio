@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
 import TypingText from "./TypingText";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useTheme } from "./ThemeProvider";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
+  const isLightTheme = theme === "light";
   
   // Créer les références en dehors de tout callback
   const layer0Ref = useRef<HTMLDivElement>(null);
@@ -87,59 +90,68 @@ const Hero = () => {
       <div ref={containerRef} className="parallax-container h-full w-full">
         {/* Fluid Background Effect - Amélioré avec des couleurs plus cohérentes */}
         {!isMobile && (
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-900/20 to-transparent"></div>
-            <motion.div 
-              className="fluid-effect" 
-              style={{ opacity: 0.3 }}
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.4, 0.3]
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            ></motion.div>
-            <motion.div 
-              className="fluid-effect" 
-              style={{ 
-                left: '30%', 
-                top: '20%',
-                background: 'radial-gradient(circle at center, var(--accent-400), var(--accent-900))',
-                opacity: 0.25
-              }}
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.25, 0.35, 0.25]
-              }}
-              transition={{
-                duration: 7,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1
-              }}
-            ></motion.div>
-            <motion.div 
-              className="fluid-effect" 
-              style={{ 
-                right: '20%', 
-                bottom: '10%',
-                background: 'radial-gradient(circle at center, var(--accent-500), var(--accent-800))',
-                opacity: 0.2
-              }}
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.2, 0.3, 0.2]
-              }}
-              transition={{
-                duration: 9,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 2
-              }}
-            ></motion.div>
+          <div className="absolute inset-0 z-0 pointer-events-none mix-blend-normal">
+            {!isLightTheme && (
+              <>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, transparent 70%)",
+                  }}
+                ></div>
+                <motion.div 
+                  className="fluid-effect" 
+                  style={{ opacity: 0.3 }}
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.4, 0.3]
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                ></motion.div>
+                <motion.div 
+                  className="fluid-effect" 
+                  style={{ 
+                    left: '30%', 
+                    top: '20%',
+                    background: 'radial-gradient(circle at center, var(--accent-400), var(--accent-900))',
+                    opacity: 0.25
+                  }}
+                  animate={{
+                    scale: [1, 1.15, 1],
+                    opacity: [0.25, 0.35, 0.25]
+                  }}
+                  transition={{
+                    duration: 7,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                ></motion.div>
+                <motion.div 
+                  className="fluid-effect" 
+                  style={{ 
+                    right: '20%', 
+                    bottom: '10%',
+                    background: 'radial-gradient(circle at center, var(--accent-500), var(--accent-800))',
+                    opacity: 0.2
+                  }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.2, 0.3, 0.2]
+                  }}
+                  transition={{
+                    duration: 9,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 2
+                  }}
+                ></motion.div>
+              </>
+            )}
           </div>
         )}
 
@@ -161,6 +173,11 @@ const Hero = () => {
                 <div className="text-center pointer-events-none">
                   <motion.h1 
                     className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+                    style={isLightTheme ? {
+                      background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
+                      WebkitBackgroundClip: 'text',
+                      color: 'transparent'
+                    } : undefined}
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
@@ -209,12 +226,12 @@ const Hero = () => {
               <div className="mt-48 sm:mt-56 md:mt-64 lg:mt-72">
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                   <motion.div
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.93 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <Link 
                       href="#contact"
-                      className="bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2 ripple-effect glow-effect"
+                      className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2 ripple-effect glow-effect ${isLightTheme ? "bg-white text-accent-700 border border-accent-200 hover:bg-accent-50" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white"}`}
                       style={{ position: 'relative', overflow: 'hidden' }}
                       onMouseDown={e => {
                         const btn = e.currentTarget;
@@ -254,7 +271,7 @@ const Hero = () => {
                   >
                     <Link 
                       href="#portfolio"
-                      className="glass-effect text-foreground font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto hover:bg-accent/5 cursor-pointer pointer-events-auto border border-border-light"
+                      className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto border ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
                     >
                       Voir mes projets
                     </Link>

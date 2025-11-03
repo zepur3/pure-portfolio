@@ -1,14 +1,5 @@
 @import "tailwindcss";
 
-/* Définition de la police Mona Sans locale avec preload */
-@font-face {
-  font-family: 'Mona Sans';
-  src: url('/fonts/Mona-Sans.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap; /* Assurer que le texte est visible pendant le chargement de la police */
-}
-
 /* Mode sombre (par défaut) */
 :root {
   /* Couleurs primaires */
@@ -67,48 +58,108 @@
   --color-foreground: var(--foreground);
   
   /* Polices */
-  --font-sans: 'Mona Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: var(--font-geist-sans, system-ui), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* Mode clair */
 html.light {
   /* Couleurs primaires */
-  --background: #ffffff;
-  --foreground: #0f0f0f;
-  
+  --background: #f5f6ff;
+  --foreground: #0b1220;
+
   /* Palette d'accent - Bleu-violet moderne pour le mode clair aussi */
-  --accent-50: #f0f4ff;
-  --accent-100: #e0e9ff;
-  --accent-200: #c7d9ff;
-  --accent-300: #9bb8ff;
-  --accent-400: #6d96ff;
-  --accent-500: #3b7cff;
-  --accent-600: #2563eb;
-  --accent-700: #1d4ed8;
-  --accent-800: #1e40af;
-  --accent-900: #1e3a8a;
-  --accent-950: #172554;
-  
+  --accent-50: #eef2ff;
+  --accent-100: #dfe3ff;
+  --accent-200: #c3c9ff;
+  --accent-300: #a7afff;
+  --accent-400: #8a92ff;
+  --accent-500: #6d74ff;
+  --accent-600: #5057f6;
+  --accent-700: #3c46d9;
+  --accent-800: #2d36b3;
+  --accent-900: #232b8a;
+  --accent-950: #1a2266;
+
   /* Raccourcis pour la compatibilité */
   --accent: var(--accent-700);
   --accent-light: var(--accent-500);
   --accent-dark: var(--accent-900);
-  
+
   /* Textes */
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-600);
-  --text-tertiary: var(--gray-500);
-  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+
   /* Bordures */
-  --border-light: rgba(0, 0, 0, 0.1);
-  --border-medium: rgba(0, 0, 0, 0.15);
-  --border-strong: rgba(0, 0, 0, 0.2);
-  
+  --border-light: rgba(15, 23, 42, 0.08);
+  --border-medium: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.18);
+
   /* Ombres - plus subtiles en mode clair */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 8px 16px rgba(148, 163, 184, 0.18);
+  --shadow-md: 0 14px 30px rgba(100, 116, 139, 0.16);
+  --shadow-lg: 0 24px 45px rgba(71, 85, 105, 0.18);
+}
+
+html.light body {
+  background: linear-gradient(180deg, #f7f8ff 0%, #ffffff 55%, #f6f2ff 100%);
+  color: var(--text-primary);
+}
+
+html.light .section {
+  background: rgba(255, 255, 255, 0.72);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+html.light .text-gradient {
+  background: none;
+  color: var(--accent-700);
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+}
+
+html.light .bg-gradient-to-r.from-accent-500.to-accent-700,
+html.light .bg-gradient-to-r.from-accent-500.to-accent-700.hover\:from-accent-600.hover\:to-accent-800 {
+  background-image: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  border: none;
+}
+
+html.light .bg-gradient-to-r.from-accent-500.to-accent-700:hover {
+  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+html.light .fluid-effect {
+  background: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+html.light .glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(111, 126, 255, 0.16);
+  box-shadow: 0 18px 35px rgba(79, 89, 128, 0.15);
+}
+
+html.light .glass-effect:hover {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 45px rgba(79, 89, 128, 0.18);
+}
+
+html.light .bg-background {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+html.light .bg-background\/50,
+html.light .bg-background\/60,
+html.light .bg-background\/80 {
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 /* Animation de transition entre les thèmes */
@@ -172,6 +223,24 @@ html.light {
   opacity: 0;
 }
 
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: screen;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
 /* Styles critiques pour le LCP - Priorité haute */
 html {
   scroll-behavior: smooth;
@@ -183,8 +252,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-sans);
   overflow-x: hidden;
-  /* Utiliser will-change uniquement sur desktop */
-  /* Les transitions seront appliquées conditionnellement via JavaScript */
+  transition: background-color 0.4s ease;
 }
 
 /* Styles critiques pour le LCP - Priorité haute */
