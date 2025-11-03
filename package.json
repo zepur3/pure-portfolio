@@ -16,7 +16,7 @@
     "framer-motion": "^12.4.10",
     "gsap": "^3.12.7",
     "next": "^15.5.4",
-    "nodemailer": "^6.10.0",
+    "nodemailer": "^7.0.10",
     "rate-limiter-flexible": "^5.0.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
