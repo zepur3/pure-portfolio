@@ -7,18 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "export": "next build && next export"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@types/dompurify": "^3.0.5",
-    "@types/jsdom": "^21.1.7",
     "critters": "^0.0.23",
     "dompurify": "^3.2.4",
     "framer-motion": "^12.4.10",
     "gsap": "^3.12.7",
-    "jsdom": "^26.0.0",
     "next": "^15.5.4",
     "nodemailer": "^6.10.0",
     "rate-limiter-flexible": "^5.0.5",
