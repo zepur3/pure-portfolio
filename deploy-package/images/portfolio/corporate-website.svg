@@ -1,8 +1,0 @@
-<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="800" height="600" fill="#2ecc71"/>
-  <circle cx="250" cy="200" r="130" fill="rgba(255, 255, 255, 0.2)"/>
-  <circle cx="600" cy="300" r="160" fill="rgba(255, 255, 255, 0.1)"/>
-  <circle cx="350" cy="450" r="110" fill="rgba(255, 255, 255, 0.15)"/>
-  <text x="400" y="300" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="white">Site Vitrine Entreprise</text>
-  <text x="400" y="360" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Projet 3</text>
-</svg>
