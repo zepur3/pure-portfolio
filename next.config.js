@@ -19,6 +19,20 @@ const nextConfig = {
   },
   // Note: Les en-têtes HTTP ne fonctionnent pas avec l'export statique
   // Ils devront être configurés au niveau du serveur web (Apache/Nginx)
+  async redirects() {
+    return [
+      {
+        source: "/index",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/index.html",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
