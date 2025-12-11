@@ -15,7 +15,7 @@
     "dompurify": "^3.2.4",
     "framer-motion": "^12.4.10",
     "gsap": "^3.12.7",
-    "next": "^15.5.4",
+    "next": "^15.5.7",
     "nodemailer": "^7.0.10",
     "rate-limiter-flexible": "^5.0.5",
     "react": "^19.2.0",
@@ -33,7 +33,7 @@
     "@types/react-dom": "^19",
     "@types/react-google-recaptcha": "^2.1.9",
     "eslint": "^9",
-    "eslint-config-next": "^15.5.4",
+    "eslint-config-next": "^15.5.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
