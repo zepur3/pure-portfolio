@@ -1,0 +1,106 @@
+import { ImageResponse } from "next/og";
+
+export const runtime = "edge";
+
+export const size = {
+  width: 180,
+  height: 180,
+};
+
+export const contentType = "image/png";
+
+export default function AppleIcon() {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "transparent",
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          width="180"
+          height="180"
+        >
+          <defs>
+            <radialGradient id="badgeGradient" cx="50%" cy="45%" r="60%">
+              <stop offset="0%" stopColor="#6d74ff" />
+              <stop offset="50%" stopColor="#3c46d9" />
+              <stop offset="100%" stopColor="#1a2266" />
+            </radialGradient>
+            <linearGradient id="accentStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#a855f7" />
+              <stop offset="100%" stopColor="#38bdf8" />
+            </linearGradient>
+            <linearGradient id="monogramFill" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="#dbeafe" stopOpacity="0.85" />
+            </linearGradient>
+            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <circle cx="256" cy="256" r="240" fill="url(#badgeGradient)" />
+          <circle cx="256" cy="256" r="188" fill="rgba(15, 23, 42, 0.35)" />
+
+          <g
+            stroke="url(#accentStroke)"
+            strokeWidth="12"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.35"
+          >
+            <path d="M96 208 H144" />
+            <path d="M96 304 H128" />
+            <path d="M416 208 H368" />
+            <path d="M416 304 H384" />
+            <path d="M208 104 V136" />
+            <path d="M304 104 V136" />
+            <path d="M256 384 V408" />
+          </g>
+
+          <g filter="url(#softGlow)">
+            <path
+              d="M140 348 L212 176 L284 348 H250 L228 292 H196 L174 348 Z"
+              fill="url(#monogramFill)"
+            />
+            <rect x="188" y="278" width="56" height="20" rx="10" fill="#8b5cf6" opacity="0.9" />
+            <path
+              d="M294 198 C322 186 362 188 384 214 C402 236 394 262 352 276 C312 290 302 302 312 320 C322 336 350 338 372 322 L390 338 C370 362 328 370 300 360 C268 350 250 324 260 294 C270 262 302 250 334 240 C360 232 366 222 358 210 C346 194 316 196 294 212 Z"
+              fill="url(#monogramFill)"
+            />
+            <path
+              d="M404 188 H448 C484 188 508 214 508 256 C508 298 484 324 448 324 H404 Z M430 214 V298 H446 C468 298 486 282 486 256 C486 230 468 214 446 214 Z"
+              fill="url(#monogramFill)"
+            />
+          </g>
+
+          <circle
+            cx="256"
+            cy="256"
+            r="212"
+            fill="none"
+            stroke="url(#accentStroke)"
+            strokeWidth="10"
+            opacity="0.6"
+          />
+        </svg>
+      </div>
+    ),
+    {
+      width: size.width,
+      height: size.height,
+    }
+  );
+}

@@ -14,7 +14,9 @@ const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en 
 const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
 const ASSET_VERSION = "20251212";
 const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
-const FAVICON_URL = LOGO_URL;
+const ICON_PNG_URL = `/icon.png?v=${ASSET_VERSION}`;
+const APPLE_ICON_PNG_URL = `/apple-icon.png?v=${ASSET_VERSION}`;
+const FAVICON_URL = ICON_PNG_URL;
 const MANIFEST_URL = `/manifest.webmanifest?v=${ASSET_VERSION}`;
 
 const geistSans = Geist({
@@ -102,15 +104,15 @@ export const metadata: Metadata = {
   manifest: MANIFEST_URL,
   icons: {
     icon: [
-      { url: FAVICON_URL, type: "image/svg+xml" },
+      { url: ICON_PNG_URL, type: "image/png" },
       { url: LOGO_URL, type: "image/svg+xml" },
     ],
     shortcut: [FAVICON_URL],
     apple: [
-      { url: LOGO_URL, type: "image/svg+xml" },
+      { url: APPLE_ICON_PNG_URL, type: "image/png" },
     ],
     other: [
-      { rel: "mask-icon", url: FAVICON_URL, color: "#6d28d9" },
+      { rel: "mask-icon", url: LOGO_URL, color: "#6d28d9" },
     ],
   },
 };
@@ -139,8 +141,8 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <link rel="icon" href={FAVICON_URL} type="image/svg+xml" />
-        <link rel="apple-touch-icon" href={LOGO_URL} />
+        <link rel="icon" href={FAVICON_URL} type="image/png" />
+        <link rel="apple-touch-icon" href={APPLE_ICON_PNG_URL} />
         <link rel="manifest" href={MANIFEST_URL} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
