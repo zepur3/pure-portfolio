@@ -13,8 +13,8 @@ const SITE_NAME = "ASD Infor";
 const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en formation`;
 const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
 const ASSET_VERSION = "20251212";
-const FAVICON_URL = `/favicon.svg?v=${ASSET_VERSION}`;
 const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
+const FAVICON_URL = LOGO_URL;
 const MANIFEST_URL = `/manifest.webmanifest?v=${ASSET_VERSION}`;
 
 const geistSans = Geist({
