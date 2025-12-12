@@ -161,7 +161,7 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
-            Vous avez un projet en tête ? N&apos;hésitez pas à me contacter pour en discuter
+            Pour une opportunité en alternance / formation (systèmes & réseaux), ou une question sur mes projets, contactez-moi. Je réponds sous 24h.
           </motion.p>
         </div>
 

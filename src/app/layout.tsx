@@ -12,6 +12,10 @@ const SITE_URL = "https://asdinfor.ovh";
 const SITE_NAME = "ASD Infor";
 const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en formation`;
 const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
+const ASSET_VERSION = "20251212";
+const FAVICON_URL = `/favicon.svg?v=${ASSET_VERSION}`;
+const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
+const MANIFEST_URL = `/manifest.webmanifest?v=${ASSET_VERSION}`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -95,18 +99,18 @@ export const metadata: Metadata = {
   verification: {
     google: "Ys8DT1cQZg3_AVmu0k8FpYll04NpwrnJG7YKLgvUL_c",
   },
-  manifest: "/manifest.webmanifest",
+  manifest: MANIFEST_URL,
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: FAVICON_URL, type: "image/svg+xml" },
+      { url: LOGO_URL, type: "image/svg+xml" },
     ],
-    shortcut: ["/favicon.svg"],
+    shortcut: [FAVICON_URL],
     apple: [
-      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: LOGO_URL, type: "image/svg+xml" },
     ],
     other: [
-      { rel: "mask-icon", url: "/favicon.svg", color: "#6d28d9" },
+      { rel: "mask-icon", url: FAVICON_URL, color: "#6d28d9" },
     ],
   },
 };
@@ -123,7 +127,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: SITE_NAME,
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.svg`,
+  logo: `${SITE_URL}/logo.svg?v=${ASSET_VERSION}`,
   description: SITE_DESCRIPTION,
 };
 
@@ -135,9 +139,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logo.svg" />
-        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="icon" href={FAVICON_URL} type="image/svg+xml" />
+        <link rel="apple-touch-icon" href={LOGO_URL} />
+        <link rel="manifest" href={MANIFEST_URL} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Google reCAPTCHA v2 */}

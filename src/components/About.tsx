@@ -73,15 +73,12 @@ const About = () => {
                 <span className="text-gradient">À propos</span> de moi
               </h2>
               <p className="text-text-secondary mb-6 leading-relaxed">
-                Passionné par les technologies, j&apos;explore le développement web en m&apos;appuyant sur l&apos;intelligence artificielle 
-                comme outil d&apos;apprentissage et d&apos;assistance. Cette approche moderne me permet de créer des sites web fonctionnels 
-                tout en développant mes compétences techniques de manière concrète.
+                Passionné par les technologies, je me forme pour devenir <strong className="text-accent">technicien systèmes & réseaux</strong>.
+                J&apos;apprends en construisant des projets concrets et en documentant ma progression.
               </p>
               <p className="text-text-secondary mb-8 leading-relaxed">
-                Mon objectif professionnel est de devenir <strong className="text-accent">technicien systèmes et réseaux</strong>. 
-                Le développement web constitue pour moi une excellente base pour comprendre les infrastructures numériques et 
-                acquérir une vision globale des technologies. Je suis actuellement à la recherche d&apos;une opportunité en alternance 
-                ou en formation pour concrétiser ce projet professionnel.
+                Le développement web (assisté par IA) est un projet parallèle: il m&apos;aide à renforcer ma logique, ma rigueur et ma méthode.
+                Je suis actuellement à la recherche d&apos;une opportunité en alternance ou en formation pour concrétiser mon projet professionnel.
               </p>
               
               <div className="mb-8" data-component-name="About">
@@ -130,7 +127,7 @@ const About = () => {
                 <div className="relative w-full" style={{ paddingBottom: "100%" }}>
                   <Image
                     src="/profile-placeholder.jpg"
-                    alt="Portrait du développeur"
+                    alt="Portrait du technicien systèmes et réseaux"
                     fill
                     sizes="(max-width: 768px) 80vw, 300px"
                     className="object-cover rounded-2xl"

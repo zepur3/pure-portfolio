@@ -15,8 +15,8 @@ const Services = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      title: "Sites Web Vitrines",
-      description: "Création de sites web modernes avec l'assistance de l'IA pour les petites entreprises et artisans."
+      title: "Support & Dépannage (en apprentissage)",
+      description: "Notions en cours d'acquisition pour diagnostiquer des incidents (poste client, applications, environnement de travail)."
     },
     {
       icon: (
@@ -24,8 +24,8 @@ const Services = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
         </svg>
       ),
-      title: "Développement Assisté par IA",
-      description: "Utilisation d'outils d'IA pour accélérer le développement et améliorer la qualité du code."
+      title: "Méthode & Automatisation",
+      description: "Veille, documentation et automatisation légère; l'IA m'aide à apprendre plus vite et à gagner en rigueur."
     },
     {
       icon: (
@@ -33,8 +33,8 @@ const Services = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       ),
-      title: "Intégration Front-end",
-      description: "Intégration de designs en sites web fonctionnels avec React, Next.js et Tailwind CSS."
+      title: "Culture Web (complément)",
+      description: "Projets web en parallèle: React, Next.js, Tailwind. Un complément utile pour comprendre des services et usages." 
     },
     {
       icon: (
@@ -52,7 +52,7 @@ const Services = () => {
         </svg>
       ),
       title: "Apprentissage Continu",
-      description: "En formation constante sur les technologies web et les systèmes & réseaux."
+      description: "En progression constante sur les fondamentaux systèmes & réseaux (et outils web en complément)."
     },
     {
       icon: (
@@ -61,7 +61,7 @@ const Services = () => {
         </svg>
       ),
       title: "Systèmes & Réseaux",
-      description: "Objectif professionnel : devenir technicien systèmes et réseaux. Recherche d'alternance."
+      description: "Objectif professionnel : technicien systèmes & réseaux. Recherche d'alternance / formation."
     }
   ];
 
@@ -108,7 +108,7 @@ const Services = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
-            Découvrez mes compétences en développement web et mon parcours vers les systèmes et réseaux
+            Mon objectif est les systèmes & réseaux. Le développement web (assisté par IA) est un complément pour apprendre et pratiquer.
           </motion.p>
         </div>
 

@@ -108,7 +108,7 @@ const Portfolio = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-sm sm:text-base text-text-secondary max-w-2xl mx-auto"
             >
-              Projets réels déployés sur Vercel. Développés avec l&apos;assistance de l&apos;IA.
+              Projets web déployés en ligne, réalisés en parallèle de mon parcours systèmes & réseaux (avec l&apos;assistance de l&apos;IA).
             </motion.p>
           </div>
 

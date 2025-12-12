@@ -15,7 +15,7 @@ const Footer = () => {
               Portfolio
             </Link>
             <p className="text-text-secondary mb-6 max-w-md">
-              Développeur web en formation, utilisant l&apos;IA comme outil d&apos;apprentissage. Objectif : technicien systèmes et réseaux.
+              En formation, objectif : technicien systèmes & réseaux. Projets web (assistés par IA) en complément.
             </p>
             <div className="flex space-x-4"></div>
           </div>
@@ -30,17 +30,17 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="#about" className="text-text-secondary hover:text-accent transition-colors duration-300">
-                  À propos
+                  Profil
                 </Link>
               </li>
               <li>
                 <Link href="#services" className="text-text-secondary hover:text-accent transition-colors duration-300">
-                  Services
+                  Compétences
                 </Link>
               </li>
               <li>
                 <Link href="#portfolio" className="text-text-secondary hover:text-accent transition-colors duration-300">
-                  Portfolio
+                  Projets web
                 </Link>
               </li>
               <li>

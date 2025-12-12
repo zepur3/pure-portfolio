@@ -182,15 +182,27 @@ const Hero = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                   >
-                    <span className="text-gradient">Développeur Web</span> Augmenté par IA
+                    <span className="text-gradient">Technicien</span> Systèmes & Réseaux
                   </motion.h1>
+
+                  <motion.div
+                    className="flex flex-wrap justify-center gap-2 mb-6"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                  >
+                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
+                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
+                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
+                  </motion.div>
+
                   <motion.p 
                     className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                   >
-                    <TypingText text="En formation continue, j'apprends le développement web avec l'IA et aspire à devenir technicien systèmes et réseaux." speed={32} className="inline-block" />
+                    <TypingText text="En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer." speed={32} className="inline-block" />
                   </motion.p>
                 </div>
                 
@@ -248,7 +260,7 @@ const Hero = () => {
                         }, 600);
                       }}
                     >
-                      Me contacter
+                      Candidature / alternance
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         width="16" 
@@ -273,7 +285,7 @@ const Hero = () => {
                       href="#portfolio"
                       className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto border ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
                     >
-                      Voir mes projets
+                      Voir mes projets web
                     </Link>
                   </motion.div>
                 </div>
