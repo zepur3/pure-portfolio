@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import Link from "next/link";
@@ -21,9 +21,6 @@ const Hero = () => {
   const layer2Ref = useRef<HTMLDivElement>(null);
   const layer3Ref = useRef<HTMLDivElement>(null);
   const layer4Ref = useRef<HTMLDivElement>(null);
-  
-  // Créer un tableau de références avec useMemo pour éviter les re-rendus inutiles
-  const layerRefs = useMemo(() => [layer0Ref, layer1Ref, layer2Ref, layer3Ref, layer4Ref], []);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -33,11 +30,13 @@ const Hero = () => {
   useEffect(() => {
     // Ne pas exécuter l'effet tant que le composant n'est pas complètement chargé
     if (!isLoaded) return;
+
+    const layers = [layer0Ref, layer1Ref, layer2Ref, layer3Ref, layer4Ref];
     
     // Si c'est un appareil mobile, ne pas ajouter l'effet de parallaxe
     if (isMobile) {
       // Appliquer une position statique pour les appareils mobiles
-      layerRefs.forEach((layerRef) => {
+      layers.forEach((layerRef) => {
         if (!layerRef.current) return;
         
         // Réinitialiser les transformations pour éviter les problèmes de performance
@@ -67,7 +66,7 @@ const Hero = () => {
       const xPos = (clientX / width - 0.5);
       const yPos = (clientY / height - 0.5);
       
-      layerRefs.forEach((layerRef, index) => {
+      layers.forEach((layerRef, index) => {
         if (!layerRef.current) return;
         
         // Réduire la vitesse de l'effet pour améliorer les performances
@@ -83,7 +82,7 @@ const Hero = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [layerRefs, isMobile, isLoaded]);
+  }, [isMobile, isLoaded]);
 
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden mt-0 pt-0">
@@ -156,75 +155,101 @@ const Hero = () => {
         )}
 
         {/* Parallax Layers - Optimisés pour mobile */}
-        {layerRefs.map((ref, index) => (
-          <div 
-            key={index} 
-            ref={ref} 
-            className="parallax-layer absolute inset-0 pointer-events-none"
-            style={{ 
-              zIndex: index + 1,
-              // Désactiver les transitions sur mobile pour éviter les ralentissements
-              transition: isMobile ? 'none' : 'transform 0.3s ease-out'
-            }}
-          >
-            {index === 2 && (
-              <div className="absolute top-1/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                {/* Contenu principal - rendu immédiat sans animation pour améliorer le LCP */}
-                <div className="text-center pointer-events-none">
-                  <motion.h1 
-                    className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
-                    style={isLightTheme ? {
-                      background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
-                      WebkitBackgroundClip: 'text',
-                      color: 'transparent'
-                    } : undefined}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                  >
-                    <span className="text-gradient">Technicien</span> Systèmes & Réseaux
-                  </motion.h1>
+        <div
+          ref={layer0Ref}
+          className="parallax-layer absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 1,
+            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
+          }}
+        />
+        <div
+          ref={layer1Ref}
+          className="parallax-layer absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 2,
+            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
+          }}
+        />
+        <div
+          ref={layer2Ref}
+          className="parallax-layer absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 3,
+            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
+          }}
+        >
+          <div className="absolute top-1/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
+            {/* Contenu principal - rendu immédiat sans animation pour améliorer le LCP */}
+            <div className="text-center pointer-events-none">
+              <motion.h1
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+                style={isLightTheme ? {
+                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent'
+                } : undefined}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span className="text-gradient">Technicien</span> Systèmes & Réseaux
+              </motion.h1>
 
-                  <motion.div
-                    className="flex flex-wrap justify-center gap-2 mb-6"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                  >
-                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
-                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
-                    <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
-                  </motion.div>
+              <motion.div
+                className="flex flex-wrap justify-center gap-2 mb-6"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
+                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
+                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
+              </motion.div>
 
-                  <motion.p 
-                    className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                  >
-                    <TypingText text="En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer." speed={32} className="inline-block" />
-                  </motion.p>
-                </div>
-                
-                {/* Animations appliquées seulement après le chargement initial */}
-                {isLoaded && !isMobile && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="absolute inset-0 z-0 pointer-events-none"
-                  >
-                    {/* Particules flottantes - ajustées pour le mode clair */}
-                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
-                    <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
-                    <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
-                    <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
-                  </motion.div>
-                )}
-              </div>
+              <motion.p
+                className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <TypingText text="En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer." speed={32} className="inline-block" />
+              </motion.p>
+            </div>
+
+            {/* Animations appliquées seulement après le chargement initial */}
+            {isLoaded && !isMobile && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="absolute inset-0 z-0 pointer-events-none"
+              >
+                {/* Particules flottantes - ajustées pour le mode clair */}
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
+                <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
+                <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
+                <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
+              </motion.div>
             )}
           </div>
-        ))}
+        </div>
+        <div
+          ref={layer3Ref}
+          className="parallax-layer absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 4,
+            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
+          }}
+        />
+        <div
+          ref={layer4Ref}
+          className="parallax-layer absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: 5,
+            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
+          }}
+        />
 
         {/* Couche interactive pour les boutons avec un z-index très élevé */}
         <div className="absolute inset-0 z-30 pointer-events-none">

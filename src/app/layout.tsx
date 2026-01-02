@@ -14,8 +14,8 @@ const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en 
 const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
 const ASSET_VERSION = "20251212";
 const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
-const ICON_PNG_URL = `/icon.png?v=${ASSET_VERSION}`;
-const APPLE_ICON_PNG_URL = `/apple-icon.png?v=${ASSET_VERSION}`;
+const ICON_PNG_URL = `/icon?v=${ASSET_VERSION}`;
+const APPLE_ICON_PNG_URL = `/apple-icon?v=${ASSET_VERSION}`;
 const FAVICON_URL = ICON_PNG_URL;
 const MANIFEST_URL = `/manifest.webmanifest?v=${ASSET_VERSION}`;
 
@@ -139,7 +139,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="fr" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href={FAVICON_URL} type="image/png" />
         <link rel="apple-touch-icon" href={APPLE_ICON_PNG_URL} />

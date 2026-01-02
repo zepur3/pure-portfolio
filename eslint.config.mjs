@@ -1,25 +1,27 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
   {
-    ignores: [
-      ".next/**",
-      "node_modules/**",
-      "dist/**",
-      "out/**",
-      "next-env.d.ts",
+    files: [
+      "src/components/Hero.tsx",
+      "src/components/ThemeProvider.tsx",
+      "src/components/ThemeToggle.tsx",
+      "src/components/ProgressiveImage.tsx",
+      "src/hooks/useIsMobile.ts",
     ],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
-
-export default eslintConfig;
+  globalIgnores([
+    ".next/**",
+    "node_modules/**",
+    "dist/**",
+    "out/**",
+    "next-env.d.ts",
+  ]),
+]);

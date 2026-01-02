@@ -6,7 +6,6 @@ const nextConfig = {
   },
   // Optimisations pour améliorer le LCP
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['framer-motion', 'gsap'],
   },
   // Compression des ressources
