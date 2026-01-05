@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -11,9 +10,9 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <Link href="#home" className="text-2xl font-bold text-gradient mb-4 inline-block">
+            <a href="#home" className="text-2xl font-bold text-gradient mb-4 inline-block">
               Portfolio
-            </Link>
+            </a>
             <p className="text-text-secondary mb-6 max-w-md">
               En formation, objectif : technicien systèmes & réseaux. Projets web (assistés par IA) en complément.
             </p>
@@ -24,29 +23,29 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Liens rapides</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="#home" className="text-text-secondary hover:text-accent transition-colors duration-300">
+                <a href="#home" className="text-text-secondary hover:text-accent transition-colors duration-300">
                   Accueil
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="#about" className="text-text-secondary hover:text-accent transition-colors duration-300">
+                <a href="#about" className="text-text-secondary hover:text-accent transition-colors duration-300">
                   Profil
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="#services" className="text-text-secondary hover:text-accent transition-colors duration-300">
+                <a href="#services" className="text-text-secondary hover:text-accent transition-colors duration-300">
                   Compétences
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="#portfolio" className="text-text-secondary hover:text-accent transition-colors duration-300">
+                <a href="#portfolio" className="text-text-secondary hover:text-accent transition-colors duration-300">
                   Projets web
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="#contact" className="text-text-secondary hover:text-accent transition-colors duration-300">
+                <a href="#contact" className="text-text-secondary hover:text-accent transition-colors duration-300">
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

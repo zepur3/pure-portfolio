@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import Link from "next/link";
 import TypingText from "./TypingText";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useTheme } from "./ThemeProvider";
@@ -266,7 +265,7 @@ const Hero = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Link 
+                    <a 
                       href="#contact"
                       className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2 ripple-effect glow-effect ${isLightTheme ? "bg-white text-accent-700 border border-accent-200 hover:bg-accent-50" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white"}`}
                       style={{ position: 'relative', overflow: 'hidden' }}
@@ -300,18 +299,18 @@ const Hero = () => {
                         <path d="M5 12h14"></path>
                         <path d="m12 5 7 7-7 7"></path>
                       </svg>
-                    </Link>
+                    </a>
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Link 
+                    <a 
                       href="#portfolio"
                       className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto border ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
                     >
                       Voir mes projets web
-                    </Link>
+                    </a>
                   </motion.div>
                 </div>
               </div>

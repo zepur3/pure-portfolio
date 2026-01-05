@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
@@ -90,19 +89,19 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
-          <Link href="#home" className="text-2xl font-bold text-gradient">
+          <a href="#home" className="text-2xl font-bold text-gradient">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Portfolio
             </motion.div>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
                 href={link.href}
                 className={`relative px-2 py-1 transition-colors duration-300 ${
@@ -122,7 +121,7 @@ const Navbar = () => {
                     transition={{ duration: 0.3 }}
                   />
                 )}
-              </Link>
+              </a>
             ))}
             <ThemeToggle />
           </div>
@@ -194,7 +193,7 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <Link
+                  <a
                     href={link.href}
                     className={`block py-2 px-3 rounded-md transition-colors duration-300 ${
                       activeSection === link.href.substring(1)
@@ -214,7 +213,7 @@ const Navbar = () => {
                     aria-current={activeSection === link.href.substring(1) ? "page" : undefined}
                   >
                     {link.name}
-                  </Link>
+                  </a>
                 </motion.div>
               ))}
             </motion.div>
