@@ -126,7 +126,7 @@ const About = () => {
               <div className="relative w-full max-w-xs rounded-2xl overflow-hidden shadow-md border border-border-light">
                 <div className="relative w-full" style={{ paddingBottom: "100%" }}>
                   <Image
-                    src="/profile-placeholder.jpg"
+                    src="/profile-placeholder.webp"
                     alt="Portrait du technicien systèmes et réseaux"
                     fill
                     sizes="(max-width: 768px) 80vw, 300px"
