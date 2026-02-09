@@ -29,21 +29,29 @@ export default function Icon() {
           height="512"
         >
           <defs>
-            <radialGradient id="badgeGradient" cx="50%" cy="45%" r="60%">
-              <stop offset="0%" stopColor="#6d74ff" />
-              <stop offset="50%" stopColor="#3c46d9" />
-              <stop offset="100%" stopColor="#1a2266" />
+            <radialGradient id="glowTR" cx="100%" cy="0%" r="80%">
+              <stop offset="0%" stopColor="#a855f7" stopOpacity="0.9" />
+              <stop offset="25%" stopColor="#8b5cf6" stopOpacity="0.5" />
+              <stop offset="50%" stopColor="#6d74ff" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
             </radialGradient>
-            <linearGradient id="accentStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#a855f7" />
-              <stop offset="100%" stopColor="#38bdf8" />
+            <radialGradient id="glowBL" cx="0%" cy="100%" r="80%">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.75" />
+              <stop offset="25%" stopColor="#22d3ee" stopOpacity="0.4" />
+              <stop offset="50%" stopColor="#6d74ff" stopOpacity="0.15" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+            </radialGradient>
+            <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.5" />
+              <stop offset="50%" stopColor="#6d74ff" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.5" />
             </linearGradient>
-            <linearGradient id="monogramFill" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#dbeafe" stopOpacity="0.85" />
+            <linearGradient id="letterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#e0e7ff" />
+              <stop offset="100%" stopColor="#ffffff" />
             </linearGradient>
-            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -51,50 +59,12 @@ export default function Icon() {
             </filter>
           </defs>
 
-          <circle cx="256" cy="256" r="240" fill="url(#badgeGradient)" />
-          <circle cx="256" cy="256" r="188" fill="rgba(15, 23, 42, 0.35)" />
+          <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="#0a0a0a" />
+          <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="url(#glowTR)" />
+          <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="url(#glowBL)" />
+          <rect x="18" y="18" width="476" height="476" rx="94" ry="94" fill="none" stroke="url(#borderGrad)" strokeWidth="1.5" />
 
-          <g
-            stroke="url(#accentStroke)"
-            strokeWidth="12"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.35"
-          >
-            <path d="M96 208 H144" />
-            <path d="M96 304 H128" />
-            <path d="M416 208 H368" />
-            <path d="M416 304 H384" />
-            <path d="M208 104 V136" />
-            <path d="M304 104 V136" />
-            <path d="M256 384 V408" />
-          </g>
-
-          <g filter="url(#softGlow)">
-            <path
-              d="M140 348 L212 176 L284 348 H250 L228 292 H196 L174 348 Z"
-              fill="url(#monogramFill)"
-            />
-            <rect x="188" y="278" width="56" height="20" rx="10" fill="#8b5cf6" opacity="0.9" />
-            <path
-              d="M294 198 C322 186 362 188 384 214 C402 236 394 262 352 276 C312 290 302 302 312 320 C322 336 350 338 372 322 L390 338 C370 362 328 370 300 360 C268 350 250 324 260 294 C270 262 302 250 334 240 C360 232 366 222 358 210 C346 194 316 196 294 212 Z"
-              fill="url(#monogramFill)"
-            />
-            <path
-              d="M404 188 H448 C484 188 508 214 508 256 C508 298 484 324 448 324 H404 Z M430 214 V298 H446 C468 298 486 282 486 256 C486 230 468 214 446 214 Z"
-              fill="url(#monogramFill)"
-            />
-          </g>
-
-          <circle
-            cx="256"
-            cy="256"
-            r="212"
-            fill="none"
-            stroke="url(#accentStroke)"
-            strokeWidth="10"
-            opacity="0.6"
-          />
+          <path d="M160 380 L232 132 C236 120 240 114 256 114 C272 114 276 120 280 132 L352 380 C354 388 348 394 340 394 L316 394 C308 394 302 390 300 382 L284 330 L228 330 L212 382 C210 390 204 394 196 394 L172 394 C164 394 158 388 160 380 Z M240 294 L272 294 L256 228 Z" fill="url(#letterGrad)" filter="url(#neonGlow)" />
         </svg>
       </div>
     ),

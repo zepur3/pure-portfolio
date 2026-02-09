@@ -35,19 +35,19 @@ export default function OpengraphImage() {
             style={{
               width: 120,
               height: 120,
-              borderRadius: "32px",
-              background: "radial-gradient(circle at 30% 30%, #818cf8, #3730a3)",
+              borderRadius: "28px",
+              background: "radial-gradient(circle at 100% 0%, rgba(168,85,247,0.5), transparent 60%), radial-gradient(circle at 0% 100%, rgba(56,189,248,0.35), transparent 60%), #0a0a0a",
+              border: "1px solid rgba(109,116,255,0.2)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "white",
-              fontSize: 48,
+              color: "#e0e7ff",
+              fontSize: 52,
               fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
+              letterSpacing: "-0.02em",
             }}
           >
-            ASD
+            A
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
