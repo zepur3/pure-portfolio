@@ -14,8 +14,6 @@ const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en 
 const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
 const ASSET_VERSION = "20251212";
 const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
-const ICON_PNG_URL = "/icon";
-const APPLE_ICON_PNG_URL = "/apple-icon";
 const FAVICON_URL = "/favicon.ico";
 const MANIFEST_URL = "/manifest.webmanifest";
 
@@ -104,12 +102,14 @@ export const metadata: Metadata = {
   manifest: MANIFEST_URL,
   icons: {
     icon: [
-      { url: ICON_PNG_URL, type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
       { url: LOGO_URL, type: "image/svg+xml" },
     ],
     shortcut: [FAVICON_URL],
     apple: [
-      { url: APPLE_ICON_PNG_URL, type: "image/png" },
+      { url: "/icon-192.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
       { rel: "mask-icon", url: LOGO_URL, color: "#6d28d9" },
@@ -142,7 +142,7 @@ export default function RootLayout({
     <html lang="fr" className="scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href={FAVICON_URL} type="image/x-icon" />
-        <link rel="apple-touch-icon" href={APPLE_ICON_PNG_URL} />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
         <link rel="manifest" href={MANIFEST_URL} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
