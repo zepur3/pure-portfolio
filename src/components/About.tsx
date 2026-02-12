@@ -3,10 +3,12 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const About = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isMobile = useIsMobile();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -41,7 +43,7 @@ const About = () => {
       {/* Ancre invisible placée avant la section pour un meilleur ciblage - réduit la distance */}
       <div id="about-anchor" style={{ position: 'relative', top: '20px', visibility: 'hidden', height: 0 }}></div>
 
-      <section id="about" className="section bg-background relative pt-8 md:pt-12 overflow-hidden">
+      <section id="about" className="section bg-background relative pt-20 md:pt-24 overflow-hidden">
         {/* Effets fluides améliorés - cohérents avec le Hero */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <div 
@@ -62,8 +64,8 @@ const About = () => {
           <motion.div
             ref={ref}
             variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            initial={isMobile ? "visible" : "hidden"}
+            animate={isMobile || isInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
             data-component-name="MotionComponent"
           >

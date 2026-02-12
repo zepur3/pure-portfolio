@@ -84,9 +84,9 @@ const Hero = () => {
   }, [isMobile, isLoaded]);
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden mt-0 pt-0">
-      <div ref={containerRef} className="parallax-container h-full w-full">
-        {/* Fluid Background Effect - Amélioré avec des couleurs plus cohérentes */}
+    <section id="home" className="relative min-h-screen w-full overflow-hidden mt-0 pt-0">
+      <div ref={containerRef} className="parallax-container min-h-screen w-full flex items-center justify-center">
+        {/* Fluid Background Effect - Desktop uniquement */}
         {!isMobile && (
           <div className="absolute inset-0 z-0 pointer-events-none mix-blend-normal">
             {!isLightTheme && (
@@ -153,175 +153,142 @@ const Hero = () => {
           </div>
         )}
 
-        {/* Parallax Layers - Optimisés pour mobile */}
+        {/* Parallax Layers - Desktop uniquement */}
+        {!isMobile && (
+          <>
+            <div ref={layer0Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 1, transition: 'transform 0.3s ease-out' }} />
+            <div ref={layer1Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 2, transition: 'transform 0.3s ease-out' }} />
+            <div ref={layer3Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 4, transition: 'transform 0.3s ease-out' }} />
+            <div ref={layer4Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 5, transition: 'transform 0.3s ease-out' }} />
+          </>
+        )}
+
+        {/* Contenu principal centré */}
         <div
-          ref={layer0Ref}
-          className="parallax-layer absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 1,
-            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
-          }}
-        />
-        <div
-          ref={layer1Ref}
-          className="parallax-layer absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 2,
-            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
-          }}
-        />
-        <div
-          ref={layer2Ref}
-          className="parallax-layer absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 3,
-            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
-          }}
+          ref={!isMobile ? layer2Ref : undefined}
+          className="relative z-10 w-full px-4 sm:px-6"
+          style={!isMobile ? { transition: 'transform 0.3s ease-out' } : undefined}
         >
-          <div className="absolute top-1/3 sm:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-            {/* Contenu principal - rendu immédiat sans animation pour améliorer le LCP */}
-            <div className="text-center pointer-events-none">
-              <motion.h1
-                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
-                style={isLightTheme ? {
-                  background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
-                  WebkitBackgroundClip: 'text',
-                  color: 'transparent'
-                } : undefined}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <span className="text-gradient">Technicien</span> Systèmes & Réseaux
-              </motion.h1>
+          <div className="text-center max-w-4xl mx-auto pt-20 sm:pt-0">
+            <motion.h1
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+              style={isLightTheme ? {
+                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent'
+              } : undefined}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <span className="text-gradient">Technicien</span> Systèmes & Réseaux
+            </motion.h1>
 
-              <motion.div
-                className="flex flex-wrap justify-center gap-2 mb-6"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
-                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
-                <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
-              </motion.div>
+            <motion.div
+              className="flex flex-wrap justify-center gap-2 mb-6"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
+              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
+              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
+            </motion.div>
 
-              <motion.p
-                className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
+            <motion.p
+              className="text-sm sm:text-base md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed px-2"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              {isMobile ? (
+                <span>En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer.</span>
+              ) : (
                 <TypingText text="En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer." speed={32} className="inline-block" />
-              </motion.p>
-            </div>
+              )}
+            </motion.p>
 
-            {/* Animations appliquées seulement après le chargement initial */}
-            {isLoaded && !isMobile && (
+            {/* Boutons CTA - directement dans le flux */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row justify-center items-center gap-4"
+            >
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="absolute inset-0 z-0 pointer-events-none"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {/* Particules flottantes - ajustées pour le mode clair */}
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
-                <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
-                <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
-                <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
+                <a 
+                  href="#contact"
+                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2 glow-effect text-sm sm:text-base ${isLightTheme ? "bg-white text-accent-700 border border-accent-200 hover:bg-accent-50" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white"}`}
+                  style={{ position: 'relative', overflow: 'hidden' }}
+                  onMouseDown={e => {
+                    const btn = e.currentTarget;
+                    const circle = document.createElement('span');
+                    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+                    const radius = diameter / 2;
+                    circle.style.width = circle.style.height = `${diameter}px`;
+                    circle.style.left = `${e.nativeEvent.offsetX - radius}px`;
+                    circle.style.top = `${e.nativeEvent.offsetY - radius}px`;
+                    circle.className = 'ripple';
+                    btn.appendChild(circle);
+                    setTimeout(() => {
+                      circle.remove();
+                    }, 600);
+                  }}
+                >
+                  Candidature / alternance
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </a>
               </motion.div>
-            )}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <a 
+                  href="#portfolio"
+                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer border text-sm sm:text-base ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
+                >
+                  Voir mes projets web
+                </a>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-        <div
-          ref={layer3Ref}
-          className="parallax-layer absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 4,
-            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
-          }}
-        />
-        <div
-          ref={layer4Ref}
-          className="parallax-layer absolute inset-0 pointer-events-none"
-          style={{
-            zIndex: 5,
-            transition: isMobile ? 'none' : 'transform 0.3s ease-out',
-          }}
-        />
 
-        {/* Couche interactive pour les boutons avec un z-index très élevé */}
-        <div className="absolute inset-0 z-30 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          {/* Particules flottantes - Desktop uniquement */}
+          {isLoaded && !isMobile && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="text-center"
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="absolute inset-0 z-0 pointer-events-none"
             >
-              <div className="mt-48 sm:mt-56 md:mt-64 lg:mt-72">
-                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <a 
-                      href="#contact"
-                      className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto shadow-md hover:shadow-lg inline-flex items-center gap-2 ripple-effect glow-effect ${isLightTheme ? "bg-white text-accent-700 border border-accent-200 hover:bg-accent-50" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white"}`}
-                      style={{ position: 'relative', overflow: 'hidden' }}
-                      onMouseDown={e => {
-                        const btn = e.currentTarget;
-                        const circle = document.createElement('span');
-                        const diameter = Math.max(btn.clientWidth, btn.clientHeight);
-                        const radius = diameter / 2;
-                        circle.style.width = circle.style.height = `${diameter}px`;
-                        circle.style.left = `${e.nativeEvent.offsetX - radius}px`;
-                        circle.style.top = `${e.nativeEvent.offsetY - radius}px`;
-                        circle.className = 'ripple';
-                        btn.appendChild(circle);
-                        setTimeout(() => {
-                          circle.remove();
-                        }, 600);
-                      }}
-                    >
-                      Candidature / alternance
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="16" 
-                        height="16" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14"></path>
-                        <path d="m12 5 7 7-7 7"></path>
-                      </svg>
-                    </a>
-                  </motion.div>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <a 
-                      href="#portfolio"
-                      className={`font-bold py-2 sm:py-3 px-8 rounded-full transition-all duration-300 w-full sm:w-auto cursor-pointer pointer-events-auto border ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
-                    >
-                      Voir mes projets web
-                    </a>
-                  </motion.div>
-                </div>
-              </div>
+              <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
+              <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
+              <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
+              <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
             </motion.div>
-          </div>
+          )}
         </div>
 
-        {/* Scroll Indicator - Optimisé pour mobile */}
+        {/* Scroll Indicator */}
         {isMobile ? (
           <div 
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none animate-bounce"
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none animate-bounce"
           >
             <div className="flex flex-col items-center">
               <span className="text-sm text-text-secondary mb-2">Scroll</span>

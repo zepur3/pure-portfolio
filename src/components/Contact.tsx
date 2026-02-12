@@ -3,6 +3,7 @@
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import { useIsMobile } from "@/hooks/useIsMobile";
 interface FormData {
   name: string;
   email: string;
@@ -27,7 +28,8 @@ const Contact = () => {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isMobile = useIsMobile();
 
   // Générer un timestamp au chargement du composant
   useEffect(() => {
@@ -148,16 +150,16 @@ const Contact = () => {
       <div className="container mx-auto px-4 md:px-6 relative z-20">
         <div className="text-center mb-16">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8 }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
             <span className="text-gradient">Contactez</span> Moi
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
@@ -169,8 +171,8 @@ const Contact = () => {
           <motion.div
             ref={ref}
             variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            initial={isMobile ? "visible" : "hidden"}
+            animate={isMobile || isInView ? "visible" : "hidden"}
             className="relative z-30"
           >
             <motion.div variants={itemVariants} className="glass-effect p-8 rounded-xl">
@@ -200,7 +202,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent relative z-40"
+                    className="w-full px-4 py-3 bg-background border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-foreground placeholder:text-text-tertiary"
                     placeholder="Votre nom"
                   />
                 </div>
@@ -216,7 +218,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent relative z-40"
+                    className="w-full px-4 py-3 bg-background border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-foreground placeholder:text-text-tertiary"
                     placeholder="Votre email"
                   />
                 </div>
@@ -232,7 +234,7 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent relative z-40"
+                    className="w-full px-4 py-3 bg-background border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-foreground placeholder:text-text-tertiary"
                     placeholder="Sujet de votre message"
                   />
                 </div>
@@ -277,7 +279,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent resize-none relative z-40"
+                    className="w-full px-4 py-3 bg-background border border-border-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-accent resize-none text-foreground placeholder:text-text-tertiary"
                     placeholder="Votre message"
                     aria-label="Zone de saisie du message"
                   ></textarea>
@@ -307,8 +309,8 @@ const Contact = () => {
           
           <motion.div
             variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            initial={isMobile ? "visible" : "hidden"}
+            animate={isMobile || isInView ? "visible" : "hidden"}
             className="relative z-30"
           >
             <motion.div variants={itemVariants} className="glass-effect p-8 rounded-xl mb-8">

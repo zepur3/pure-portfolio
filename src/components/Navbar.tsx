@@ -75,7 +75,7 @@ const Navbar = () => {
 
   const navbarClasses = `fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
     scrolled
-      ? "bg-opacity-80 backdrop-blur-md py-2 shadow-lg"
+      ? "bg-background/80 backdrop-blur-md py-2 shadow-lg"
       : "bg-transparent py-4"
   }`;
 

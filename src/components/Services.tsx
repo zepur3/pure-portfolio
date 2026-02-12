@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 const Services = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   const services = [
     {
@@ -95,16 +95,16 @@ const Services = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-3xl md:text-4xl font-bold mb-4"
           >
             <span className="text-gradient">Mes</span> Compétences
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
@@ -115,8 +115,8 @@ const Services = () => {
         <motion.div
           ref={ref}
           variants={containerVariants}
-          initial="hidden"
-          animate={isInView && !isMobile ? "visible" : "visible"}
+          initial={isMobile ? "visible" : "hidden"}
+          animate={isMobile || isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {services.map((service, index) => (
@@ -133,8 +133,8 @@ const Services = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView && !isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={isMobile || isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.3, delay: 0.1 }}
           className="text-center mt-12"
           data-component-name="Services"

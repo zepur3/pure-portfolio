@@ -6,7 +6,6 @@ import About from "@/components/About";
 import Services from "@/components/Services";
 import Portfolio from "@/components/Portfolio";
 import Footer from "@/components/Footer";
-import ThemeToggle from "@/components/ThemeToggle";
 import dynamic from "next/dynamic";
 
 const FluidEffect = dynamic(() => import("@/components/FluidEffect"), {
@@ -34,7 +33,6 @@ export default function Home() {
       <Portfolio />
       <Contact />
       <Footer />
-      <ThemeToggle />
     </main>
   );
 }
