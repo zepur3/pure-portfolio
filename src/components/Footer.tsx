@@ -82,7 +82,7 @@ const Footer = () => {
           
           <motion.a
             href="#home"
-            className="glass-effect p-3 rounded-full hover:bg-white/10 transition-all duration-300"
+            className="glass-effect p-3 rounded-full hover:bg-accent/10 transition-all duration-300"
             whileHover={{ y: -5 }}
             aria-label="Retour en haut"
           >

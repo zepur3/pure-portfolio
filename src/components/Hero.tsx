@@ -221,7 +221,7 @@ const Hero = () => {
               >
                 <a 
                   href="#contact"
-                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2 glow-effect text-sm sm:text-base ${isLightTheme ? "bg-white text-accent-700 border border-accent-200 hover:bg-accent-50" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white"}`}
+                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2 text-sm sm:text-base ${isLightTheme ? "bg-accent-700 text-white hover:bg-accent-800" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white glow-effect"}`}
                   style={{ position: 'relative', overflow: 'hidden' }}
                   onMouseDown={e => {
                     const btn = e.currentTarget;
@@ -261,7 +261,7 @@ const Hero = () => {
               >
                 <a 
                   href="#portfolio"
-                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer border text-sm sm:text-base ${isLightTheme ? "bg-accent-100/70 text-accent-800 border-accent-200 hover:bg-accent-200/70" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
+                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer border text-sm sm:text-base ${isLightTheme ? "bg-white text-accent-700 border-accent-200 hover:bg-accent-50 shadow-sm" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
                 >
                   Voir mes projets web
                 </a>

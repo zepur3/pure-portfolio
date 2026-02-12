@@ -151,7 +151,7 @@ const Portfolio = () => {
                 className={`px-4 sm:px-6 py-2 rounded-full transition-all duration-300 ${
                   activeCategory === category.id
                     ? "bg-accent text-white"
-                    : "glass-effect hover:bg-white/10"
+                    : "glass-effect hover:bg-accent/10"
                 }`}
               >
                 {category.name}
