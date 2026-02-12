@@ -23,7 +23,7 @@ const Portfolio = () => {
       id: 1,
       title: "SaaS Ideas",
       category: "saas",
-      image: "/images/portfolio/saas-idaes.svg",
+      image: "/images/portfolio/saas-idaes.webp",
       description: "Plateforme SaaS permettant de créer un site professionnel en 5 minutes. Offres clé en main, sur-mesure et accompagnement. Projet en cours de développement.",
       link: "https://saas-idaes.vercel.app/",
       github: "",
@@ -34,7 +34,7 @@ const Portfolio = () => {
       id: 2,
       title: "Regard d'Hyper(sens)ible",
       category: "client",
-      image: "/images/portfolio/regard-hypersensible.svg",
+      image: "/images/portfolio/regard-hypersensible.webp",
       description: "Blog créé pour une cliente sur l'hypersensibilité. Design épuré et chaleureux, système d'articles, espace communautaire. Site en production avec nom de domaine personnalisé.",
       link: "https://www.regard-dhypersensible.fr/",
       github: "",
@@ -45,7 +45,7 @@ const Portfolio = () => {
       id: 3,
       title: "Élagage Pro",
       category: "web",
-      image: "/images/portfolio/elagage-pro.png",
+      image: "/images/portfolio/elagage-pro.webp",
       description: "Site vitrine professionnel pour une entreprise d'élagage. Design moderne et responsive.",
       link: "https://elagage-pro.vercel.app/",
       github: "https://github.com/zepur3/elagage-pro",
@@ -56,7 +56,7 @@ const Portfolio = () => {
       id: 4,
       title: "MAM Project",
       category: "web",
-      image: "/images/portfolio/mam.png",
+      image: "/images/portfolio/mam.webp",
       description: "Site web moderne développé avec Next.js. Projet complet avec navigation, galerie et formulaire de contact.",
       link: "https://mam-project-six.vercel.app/",
       github: "https://github.com/zepur3/mam-project",
@@ -67,7 +67,7 @@ const Portfolio = () => {
       id: 5,
       title: "Ranch Légumes",
       category: "web",
-      image: "/images/portfolio/ranch.png",
+      image: "/images/portfolio/ranch.webp",
       description: "Site web pour un ranch de légumes bio. Interface claire et intuitive développée avec Next.js.",
       link: "https://ranch-legumes.vercel.app/",
       github: "https://github.com/zepur3/ranch-legumes",
@@ -78,7 +78,7 @@ const Portfolio = () => {
       id: 6,
       title: "Premier Site Web",
       category: "web",
-      image: "/images/portfolio/premier-site.png",
+      image: "/images/portfolio/premier-site.webp",
       description: "Mon tout premier site web créé à la main en HTML, CSS et JavaScript pur. Point de départ de mon apprentissage.",
       link: "https://premier-site-drab.vercel.app/index.html",
       github: "https://github.com/zepur3/premier-site",
@@ -181,6 +181,7 @@ const Portfolio = () => {
                     src={project.image}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-all duration-700 ease-in-out group-hover:scale-110"
                   />
                   <div 

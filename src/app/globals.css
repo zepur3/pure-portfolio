@@ -606,6 +606,15 @@ html.light .animate-pulse.animation-delay-3000 {
   }
 }
 
+/* Effet de curseur clignotant pour le TypingText */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
