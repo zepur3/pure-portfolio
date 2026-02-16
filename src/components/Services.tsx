@@ -76,7 +76,7 @@ const Services = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 0 },
     visible: {
       opacity: 1,
       y: 0,
@@ -123,7 +123,7 @@ const Services = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="glass-effect p-6 rounded-xl hover:transform hover:scale-105 transition-all duration-300"
+              className="glass-effect p-6 rounded-xl"
             >
               <div className="mb-4">{service.icon}</div>
               <h3 className="text-xl font-bold mb-3">{service.title}</h3>
