@@ -85,6 +85,17 @@ const Portfolio = () => {
       status: "En ligne",
       tech: "HTML/CSS/JS",
     },
+    {
+      id: 7,
+      title: "Cabinet de Psychologie",
+      category: "client",
+      image: "/images/portfolio/psycho-mu-nine.webp",
+      description: "Site vitrine professionnel pour un cabinet de psychologie. Design apaisant, présentation des services, prise de RDV via Doctolib et informations pratiques.",
+      link: "https://psycho-mu-nine.vercel.app/",
+      github: "",
+      status: "En ligne",
+      tech: "Next.js / Doctolib",
+    },
   ];
 
   const filteredProjects = activeCategory === "all" 
