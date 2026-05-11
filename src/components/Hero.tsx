@@ -1,339 +1,136 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import TypingText from "./TypingText";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { useTheme } from "./ThemeProvider";
 
+const marqueeItems = ["idaes.fr", "SaaS Builder", "Indie Maker", "React", "Next.js", "Freelance", "TypeScript", "Tailwind", "Autonome"];
+
 const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const isMobile = useIsMobile();
   const { theme } = useTheme();
-  const isLightTheme = theme === "light";
-  
-  // Créer les références en dehors de tout callback
-  const layer0Ref = useRef<HTMLDivElement>(null);
-  const layer1Ref = useRef<HTMLDivElement>(null);
-  const layer2Ref = useRef<HTMLDivElement>(null);
-  const layer3Ref = useRef<HTMLDivElement>(null);
-  const layer4Ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  // Effet de parallaxe - désactivé ou simplifié sur mobile
-  useEffect(() => {
-    // Ne pas exécuter l'effet tant que le composant n'est pas complètement chargé
-    if (!isLoaded) return;
-
-    const layers = [layer0Ref, layer1Ref, layer2Ref, layer3Ref, layer4Ref];
-    
-    // Si c'est un appareil mobile, ne pas ajouter l'effet de parallaxe
-    if (isMobile) {
-      // Appliquer une position statique pour les appareils mobiles
-      layers.forEach((layerRef) => {
-        if (!layerRef.current) return;
-        
-        // Réinitialiser les transformations pour éviter les problèmes de performance
-        gsap.set(layerRef.current, {
-          x: 0,
-          y: 0,
-          clearProps: "transform"
-        });
-      });
-      return;
-    }
-    
-    // Version optimisée de l'effet de parallaxe pour desktop
-    let lastMouseMoveTime = 0;
-    const mouseMoveThrottle = 16; // ~60fps
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      const now = Date.now();
-      if (now - lastMouseMoveTime < mouseMoveThrottle) return;
-      lastMouseMoveTime = now;
-      
-      if (!containerRef.current) return;
-      
-      const { clientX, clientY } = e;
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      
-      const xPos = (clientX / width - 0.5);
-      const yPos = (clientY / height - 0.5);
-      
-      layers.forEach((layerRef, index) => {
-        if (!layerRef.current) return;
-        
-        // Réduire la vitesse de l'effet pour améliorer les performances
-        const speed = (index + 1) * 0.03;
-        
-        // Utiliser une transformation CSS directe au lieu de GSAP pour de meilleures performances
-        layerRef.current.style.transform = `translate(${xPos * 50 * speed}px, ${yPos * 50 * speed}px)`;
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [isMobile, isLoaded]);
+  const isLight = theme === "light";
 
   return (
-    <section id="home" className="relative min-h-screen w-full overflow-hidden mt-0 pt-0">
-      <div ref={containerRef} className="parallax-container min-h-screen w-full flex items-center justify-center">
-        {/* Fluid Background Effect - Desktop uniquement */}
-        {!isMobile && (
-          <div className="absolute inset-0 z-0 pointer-events-none mix-blend-normal">
-            {!isLightTheme && (
-              <>
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, transparent 70%)",
-                  }}
-                ></div>
-                <motion.div 
-                  className="fluid-effect" 
-                  style={{ opacity: 0.3 }}
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.3, 0.4, 0.3]
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                ></motion.div>
-                <motion.div 
-                  className="fluid-effect" 
-                  style={{ 
-                    left: '30%', 
-                    top: '20%',
-                    background: 'radial-gradient(circle at center, var(--accent-400), var(--accent-900))',
-                    opacity: 0.25
-                  }}
-                  animate={{
-                    scale: [1, 1.15, 1],
-                    opacity: [0.25, 0.35, 0.25]
-                  }}
-                  transition={{
-                    duration: 7,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                ></motion.div>
-                <motion.div 
-                  className="fluid-effect" 
-                  style={{ 
-                    right: '20%', 
-                    bottom: '10%',
-                    background: 'radial-gradient(circle at center, var(--accent-500), var(--accent-800))',
-                    opacity: 0.2
-                  }}
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.2, 0.3, 0.2]
-                  }}
-                  transition={{
-                    duration: 9,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2
-                  }}
-                ></motion.div>
-              </>
-            )}
-          </div>
-        )}
+    <section id="home" className="relative min-h-screen w-full overflow-hidden flex flex-col">
 
-        {/* Parallax Layers - Desktop uniquement */}
-        {!isMobile && (
-          <>
-            <div ref={layer0Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 1, transition: 'transform 0.3s ease-out' }} />
-            <div ref={layer1Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 2, transition: 'transform 0.3s ease-out' }} />
-            <div ref={layer3Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 4, transition: 'transform 0.3s ease-out' }} />
-            <div ref={layer4Ref} className="parallax-layer absolute inset-0 pointer-events-none" style={{ zIndex: 5, transition: 'transform 0.3s ease-out' }} />
-          </>
-        )}
-
-        {/* Contenu principal centré */}
+      {/* ── Fond ── */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        {/* Grille subtile */}
         <div
-          ref={!isMobile ? layer2Ref : undefined}
-          className="relative z-10 w-full px-4 sm:px-6"
-          style={!isMobile ? { transition: 'transform 0.3s ease-out' } : undefined}
-        >
-          <div className="text-center max-w-4xl mx-auto pt-20 sm:pt-0">
-            <motion.h1
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
-              style={isLightTheme ? {
-                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92))',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent'
-              } : undefined}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <span className="text-gradient">Technicien</span> Systèmes & Réseaux
-            </motion.h1>
-
-            <motion.div
-              className="flex flex-wrap justify-center gap-2 mb-6"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Recherche alternance / formation</span>
-              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">Albi, France</span>
-              <span className="px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium glass-effect border border-border-light">En formation</span>
-            </motion.div>
-
-            <motion.p
-              className="text-sm sm:text-base md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed px-2"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              {isMobile ? (
-                <span>En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer.</span>
-              ) : (
-                <TypingText text="En formation, je vise un poste en systèmes & réseaux. Le développement web assisté par IA est un projet parallèle pour apprendre et pratiquer." speed={32} className="inline-block" />
-              )}
-            </motion.p>
-
-            {/* Boutons CTA - directement dans le flux */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row justify-center items-center gap-4"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <a 
-                  href="#contact"
-                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2 text-sm sm:text-base ${isLightTheme ? "bg-accent-700 text-white hover:bg-accent-800" : "bg-gradient-to-r from-accent-500 to-accent-700 hover:from-accent-600 hover:to-accent-800 text-white glow-effect"}`}
-                  style={{ position: 'relative', overflow: 'hidden' }}
-                  onMouseDown={e => {
-                    const btn = e.currentTarget;
-                    const circle = document.createElement('span');
-                    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
-                    const radius = diameter / 2;
-                    circle.style.width = circle.style.height = `${diameter}px`;
-                    circle.style.left = `${e.nativeEvent.offsetX - radius}px`;
-                    circle.style.top = `${e.nativeEvent.offsetY - radius}px`;
-                    circle.className = 'ripple';
-                    btn.appendChild(circle);
-                    setTimeout(() => {
-                      circle.remove();
-                    }, 600);
-                  }}
-                >
-                  Candidature / alternance
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <a 
-                  href="#portfolio"
-                  className={`font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 cursor-pointer border text-sm sm:text-base ${isLightTheme ? "bg-white text-accent-700 border-accent-200 hover:bg-accent-50 shadow-sm" : "glass-effect text-foreground hover:bg-accent/5 border-border-light"}`}
-                >
-                  Voir mes projets web
-                </a>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Particules flottantes - Desktop uniquement */}
-          {isLoaded && !isMobile && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute inset-0 z-0 pointer-events-none"
-            >
-              <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent-400 rounded-full opacity-60 animate-pulse"></div>
-              <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-accent-300 rounded-full opacity-40 animate-pulse animation-delay-1000"></div>
-              <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 bg-accent-500 rounded-full opacity-50 animate-pulse animation-delay-2000"></div>
-              <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-accent-200 rounded-full opacity-30 animate-pulse animation-delay-3000"></div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Scroll Indicator */}
-        {isMobile ? (
-          <div 
-            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none animate-bounce"
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-text-secondary mb-2">Scroll</span>
-              <svg 
-                className="w-6 h-6 text-accent" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-                />
-              </svg>
-            </div>
-          </div>
-        ) : (
-          <motion.div 
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-text-secondary mb-2">Scroll</span>
-              <svg 
-                className="w-6 h-6 text-accent" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-                />
-              </svg>
-            </div>
-          </motion.div>
-        )}
+          className="absolute inset-0"
+          style={{
+            backgroundImage: isLight
+              ? "linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px)"
+              : "linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px)",
+            backgroundSize: "70px 70px",
+          }}
+        />
+        {/* Orbes */}
+        <div className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(circle,rgba(59,124,255,0.13) 0%,transparent 70%)" }} />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full" style={{ background: "radial-gradient(circle,rgba(59,124,255,0.07) 0%,transparent 70%)" }} />
       </div>
+
+      {/* ── Contenu principal ── */}
+      <div className="relative z-10 flex-1 flex flex-col justify-center container mx-auto px-6 sm:px-10 pt-32 pb-16">
+
+        {/* Tags */}
+        <motion.div
+          className="flex flex-wrap gap-2 mb-8"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {["Indie Maker", "SaaS Builder", "Freelance"].map((tag, i) => (
+            <span
+              key={tag}
+              className={`text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.18em] border ${
+                i === 0
+                  ? "border-accent text-accent"
+                  : isLight ? "border-black/20 text-black/50" : "border-white/20 text-white/40"
+              }`}
+            >
+              {tag}
+            </span>
+          ))}
+        </motion.div>
+
+        {/* Titre géant */}
+        <motion.h1
+          className="font-black leading-[0.88] tracking-tighter uppercase mb-10 text-[clamp(3.2rem,11vw,9.5rem)]"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
+          <span className="block text-gradient">Indie</span>
+          <span className="block">Maker.</span>
+        </motion.h1>
+
+        {/* Ligne bas : desc + boutons */}
+        <motion.div
+          className="flex flex-col md:flex-row md:items-end gap-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.38 }}
+        >
+          <p className="text-text-secondary max-w-sm leading-relaxed">
+            Je construis{" "}
+            <a href="https://www.idaes.fr" target="_blank" rel="noopener noreferrer" className="text-accent font-semibold hover:underline">
+              idaes.fr
+            </a>
+            {" "}— une plateforme SaaS pour aider les professionnels
+            à créer leur présence en ligne. En parallèle, disponible
+            pour missions freelance tech.
+          </p>
+
+          <div className="flex gap-3 md:ml-auto shrink-0">
+            <motion.a
+              href="https://www.idaes.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-accent text-white font-bold py-4 px-7 rounded-full inline-flex items-center gap-2 text-sm uppercase tracking-wider hover:bg-accent-600 transition-colors duration-300"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+            >
+              Voir idaes.fr
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              </svg>
+            </motion.a>
+            <motion.a
+              href="#contact"
+              className={`font-bold py-4 px-7 rounded-full text-sm uppercase tracking-wider border transition-colors duration-300 ${
+                isLight
+                  ? "border-black/20 text-black/70 hover:border-accent hover:text-accent"
+                  : "border-white/20 text-white/60 hover:border-accent hover:text-accent"
+              }`}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+            >
+              Freelance →
+            </motion.a>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ── Marquee ── */}
+      <div className={`relative z-10 border-t py-5 overflow-hidden ${ isLight ? "border-black/10" : "border-white/10" }`}>
+        <motion.div
+          className="flex gap-12 whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 28, ease: "linear", repeat: Infinity }}
+        >
+          {[...Array(4)].map((_, i) => (
+            <span key={i} className={`font-black text-sm uppercase tracking-[0.25em] flex items-center gap-12 ${ isLight ? "text-black/15" : "text-white/15" }`}>
+              {marqueeItems.map((item, j) => (
+                <span key={j} className="flex items-center gap-12">
+                  {item}
+                  <span className="text-accent text-xs">✦</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
     </section>
   );
 };
