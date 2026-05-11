@@ -62,114 +62,135 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* Mode clair */
+/* ═══════════════════════════════════════════════════════════
+   MODE CLAIR — Clean moderne, style agency premium
+═══════════════════════════════════════════════════════════ */
+
 html.light {
-  /* Couleurs primaires */
-  --background: #f5f6ff;
-  --foreground: #0b1220;
+  --background:     #F7F7F7;
+  --foreground:     #080808;
+  --text-primary:   #080808;
+  --text-secondary: #555555;
+  --text-tertiary:  #888888;
 
-  /* Palette d'accent - Bleu-violet moderne pour le mode clair aussi */
-  --accent-50: #eef2ff;
-  --accent-100: #dfe3ff;
-  --accent-200: #c3c9ff;
-  --accent-300: #a7afff;
-  --accent-400: #8a92ff;
-  --accent-500: #6d74ff;
-  --accent-600: #5057f6;
-  --accent-700: #3c46d9;
-  --accent-800: #2d36b3;
-  --accent-900: #232b8a;
-  --accent-950: #1a2266;
+  --accent-50:  #eef2ff;
+  --accent-100: #e0e7ff;
+  --accent-200: #c7d2fe;
+  --accent-300: #a5b4fc;
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+  --accent-800: #3730a3;
+  --accent-900: #312e81;
+  --accent-950: #1e1b4b;
 
-  /* Raccourcis pour la compatibilité */
-  --accent: var(--accent-700);
+  --accent:       var(--accent-600);
   --accent-light: var(--accent-500);
-  --accent-dark: var(--accent-900);
+  --accent-dark:  var(--accent-800);
 
-  /* Textes */
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-tertiary: #64748b;
+  --border-light:  rgba(0, 0, 0, 0.07);
+  --border-medium: rgba(0, 0, 0, 0.11);
+  --border-strong: rgba(0, 0, 0, 0.18);
 
-  /* Bordures */
-  --border-light: rgba(15, 23, 42, 0.08);
-  --border-medium: rgba(15, 23, 42, 0.12);
-  --border-strong: rgba(15, 23, 42, 0.18);
-
-  /* Ombres - subtiles et propres en mode clair */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 4px  rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.09);
 }
 
+/* ── Body : gris très clair, propre ── */
 html.light body {
-  background: #f8f9fc;
+  background-color: #F7F7F7;
   background-image: none;
-  color: var(--text-primary);
+  color: #080808;
 }
 
-html.light .section {
-  background: rgba(255, 255, 255, 0.6);
-  border-top: 1px solid rgba(0, 0, 0, 0.04);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+/* ── Sections : même fond, ligne de séparation fine ── */
+html.light .section,
+html.light .section.bg-background,
+html.light .section:nth-child(even),
+html.light #services.section,
+html.light #about.section,
+html.light #portfolio.section {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: none;
 }
 
+/* Légère alternance : sections paires légèrement plus foncées */
 html.light .section:nth-child(even) {
-  background: rgba(248, 250, 255, 0.8);
+  background-color: #F0F0F0 !important;
 }
 
-/* Hero en mode clair — fond subtil */
-html.light #home {
-  background: linear-gradient(180deg, #f0f2ff 0%, #f8f9fc 100%);
-}
-
-html.light .text-gradient {
-  background: none;
-  color: var(--accent-700);
-  background-clip: initial;
-  -webkit-background-clip: initial;
-  -webkit-text-fill-color: currentColor;
-  animation: none;
-}
-
-html.light .bg-gradient-to-r.from-accent-500.to-accent-700,
-html.light .bg-gradient-to-r.from-accent-500.to-accent-700.hover\:from-accent-600.hover\:to-accent-800 {
-  background-image: linear-gradient(135deg, #4f46e5, #7c3aed);
-  color: #ffffff;
-  border: none;
-}
-
-html.light .bg-gradient-to-r.from-accent-500.to-accent-700:hover {
-  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
-}
-
-html.light .fluid-effect {
-  background: none !important;
-  opacity: 0 !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
-}
-
-html.light .glass-effect {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-html.light .glass-effect:hover {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-html.light .bg-background {
-  background-color: rgba(255, 255, 255, 0.85);
-}
-
+/* ── bg-background ── */
+html.light .bg-background,
 html.light .bg-background\/50,
 html.light .bg-background\/60,
 html.light .bg-background\/80 {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: #F7F7F7 !important;
 }
+
+/* ── Hero : fond légèrement contrasté ── */
+html.light #home {
+  background: #EFEFEF !important;
+  background-image: none !important;
+}
+
+/* ── Text gradient ── */
+html.light .text-gradient {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: none;
+}
+
+/* ── Bordures hardcodées white → grises neutres ── */
+html.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.07)  !important; }
+html.light .border-white\/20 { border-color: rgba(0, 0, 0, 0.10)  !important; }
+html.light .border-white\/30 { border-color: rgba(0, 0, 0, 0.13)  !important; }
+html.light .border-white\/40 { border-color: rgba(0, 0, 0, 0.17)  !important; }
+
+/* ── Textes hardcodés white → gris sombres ── */
+html.light .text-white\/10  { color: rgba(0, 0, 0, 0.10) !important; }
+html.light .text-white\/15  { color: rgba(0, 0, 0, 0.15) !important; }
+html.light .text-white\/20  { color: rgba(0, 0, 0, 0.20) !important; }
+html.light .text-white\/40  { color: rgba(0, 0, 0, 0.40) !important; }
+html.light .text-white\/50  { color: rgba(0, 0, 0, 0.50) !important; }
+html.light .text-white\/60  { color: rgba(0, 0, 0, 0.60) !important; }
+
+/* ── Carte idaes.fr ── */
+html.light .bg-accent\/5  { background-color: rgba(79, 70, 229, 0.05) !important; }
+html.light .bg-accent\/10 { background-color: rgba(79, 70, 229, 0.08) !important; }
+
+/* ── Navbar scrolled ── */
+html.light .bg-background\/80.backdrop-blur-md,
+html.light nav .bg-background\/80 {
+  background-color: rgba(247, 247, 247, 0.92) !important;
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ── Badge photo ── */
+html.light .bg-background\/80.backdrop-blur-sm {
+  background-color: rgba(247, 247, 247, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ── Glass effect (menu mobile) ── */
+html.light .glass-effect {
+  background: rgba(247, 247, 247, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Skill tags ── */
+html.light .border-accent\/30 { border-color: rgba(79, 70, 229, 0.22) !important; }
+html.light .text-accent\/80   { color: rgba(79, 70, 229, 0.90)         !important; }
+
+/* ── fluid-effect off en mode clair ── */
+html.light .fluid-effect { display: none; }
 
 /* Animation de transition entre les thèmes */
 .theme-transition {
