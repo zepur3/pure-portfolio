@@ -32,7 +32,7 @@ const Services = () => {
             <h2 className="text-5xl md:text-6xl font-black leading-tight uppercase tracking-tight">
               <span className="text-gradient">SaaS</span>
               <br />
-              <span className="text-foreground">&amp; Freelance.</span>
+              <span className="text-foreground">&amp; terrain.</span>
             </h2>
           </motion.div>
           <motion.p
@@ -42,7 +42,7 @@ const Services = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            idaes.fr en priorité, missions freelance en complément pour financer le projet et rester sur le terrain.
+            Je priorise idaes.fr pour en faire mon métier. Les lignes ci-dessous, c&apos;est le savoir-faire terrain que je peux encore mobiliser ponctuellement.
           </motion.p>
         </div>
 

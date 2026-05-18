@@ -10,3 +10,4 @@ alwaysApply: true
 - `dangerouslySetInnerHTML` : réservé au contenu **entièrement contrôlé** (ex. JSON-LD depuis un objet statique, CSS critique lu depuis un fichier du repo). Si du HTML provient d’utilisateurs ou d’API externes, sanitizer (ex. DOMPurify côté client ; côté serveur, bibliothèque adaptée) ou éviter le HTML.
 - Après toute modification touchant au formulaire ou à l’API contact : exécuter `pnpm lint` et `pnpm build`.
 - Dépendances : surveiller les alertes `pnpm audit` ; mettre à jour les correctifs de sécurité des paquets utilisés (Next, nodemailer, etc.).
+- **README racine** : sections « Contrat sécurité — README prioritaire » et « Rituel sécurité » définissent le process (prompts, grep rapide, checklists). Si l’utilisateur demande de s’y baser, appliquer ce process pour les changements touchant secrets, HTML injecté, API contact ou dépendances sensibles ; en cas d’ambiguïté sur le *workflow* sécurité, **le README prime**.

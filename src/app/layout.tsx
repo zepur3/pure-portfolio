@@ -10,8 +10,9 @@ import Script from 'next/script';
 
 const SITE_URL = "https://asdinfor.ovh";
 const SITE_NAME = "ASD Infor";
-const SITE_TITLE = `${SITE_NAME} | Portfolio technicien systèmes & réseaux en formation`;
-const SITE_DESCRIPTION = "Portfolio ASD Infor : futur technicien systèmes et réseaux, projets web réalisés en formation et disponibilité pour missions, alternance ou accompagnement numérique.";
+const SITE_TITLE = `${SITE_NAME} | Indie maker — SaaS idaes.fr`;
+const SITE_DESCRIPTION =
+  "Portfolio ASD Infor : créateur indie derrière idaes.fr (SaaS pour la présence en ligne des pros). Projets web et contact.";
 const ASSET_VERSION = "20251212";
 const LOGO_URL = `/logo.svg?v=${ASSET_VERSION}`;
 const FAVICON_URL = "/favicon.ico";
@@ -46,10 +47,12 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: [
     SITE_NAME,
-    "portfolio technicien systèmes réseaux",
-    "projets web étudiant",
-    "alternance systèmes et réseaux",
-    "formation développement web",
+    "indie maker",
+    "SaaS",
+    "idaes.fr",
+    "Next.js",
+    "portfolio développeur",
+    "création site web pro",
     "optimisation SEO",
     "asdinfor.ovh",
   ],

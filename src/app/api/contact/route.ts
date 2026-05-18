@@ -10,6 +10,9 @@ const rateLimiter = new RateLimiterMemory({
   duration: limiterDurationSeconds,
 });
 
+/** Origine publique connue si aucune variable CORS n’est définie (évite `*` en prod). */
+const FALLBACK_PRODUCTION_ORIGIN = "https://asdinfor.ovh";
+
 type ContactPayload = {
   name: string;
   email: string;
@@ -30,16 +33,30 @@ const REQUIRED_ENV_VARS = [
   "RECAPTCHA_SECRET_KEY",
 ] as const;
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_SITE_URL ?? "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
+function getAllowedOrigin(): string {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configured) return configured.replace(/\/$/, "");
+  const vercel = process.env.VERCEL_URL?.trim();
+  if (vercel) {
+    const host = vercel.replace(/^https?:\/\//, "");
+    return `https://${host}`;
+  }
+  if (process.env.NODE_ENV === "production") return FALLBACK_PRODUCTION_ORIGIN;
+  return "*";
+}
+
+function corsHeaders(): Record<string, string> {
+  return {
+    "Access-Control-Allow-Origin": getAllowedOrigin(),
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
 
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 204,
-    headers: corsHeaders,
+    headers: corsHeaders(),
   });
 }
 
@@ -83,6 +100,16 @@ function sanitizeText(value: string) {
   return value.replace(/[\r\n]+/g, " ").trim();
 }
 
+/** Évite injection HTML dans le corps mail (clients mail). */
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function validatePayload(payload: ContactPayload) {
   const errors: string[] = [];
 
@@ -117,7 +144,7 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json(
         { success: false, error: "Trop de tentatives. Veuillez réessayer plus tard." },
-        { status: 429, headers: corsHeaders }
+        { status: 429, headers: corsHeaders() }
       );
     }
 
@@ -127,12 +154,12 @@ export async function POST(request: Request) {
     } catch {
       return NextResponse.json(
         { success: false, error: "Corps de requête invalide" },
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers: corsHeaders() }
       );
     }
 
     if (payload.honeypot) {
-      return NextResponse.json({ success: true }, { status: 200, headers: corsHeaders });
+      return NextResponse.json({ success: true }, { status: 200, headers: corsHeaders() });
     }
 
     const minSubmissionTime = Number(process.env.MIN_SUBMISSION_TIME ?? 3);
@@ -141,7 +168,7 @@ export async function POST(request: Request) {
       if (elapsed < minSubmissionTime) {
         return NextResponse.json(
           { success: false, error: "Soumission trop rapide, merci de réessayer." },
-          { status: 400, headers: corsHeaders }
+          { status: 400, headers: corsHeaders() }
         );
       }
     }
@@ -150,7 +177,7 @@ export async function POST(request: Request) {
     if (validationErrors.length > 0) {
       return NextResponse.json(
         { success: false, error: validationErrors.join(", ") },
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers: corsHeaders() }
       );
     }
 
@@ -158,7 +185,7 @@ export async function POST(request: Request) {
     if (!recaptchaOk) {
       return NextResponse.json(
         { success: false, error: "Vérification reCAPTCHA échouée." },
-        { status: 400, headers: corsHeaders }
+        { status: 400, headers: corsHeaders() }
       );
     }
 
@@ -172,12 +199,17 @@ export async function POST(request: Request) {
       },
     });
 
+    const nameLine = escapeHtml(sanitizeText(payload.name));
+    const emailLine = escapeHtml(sanitizeText(payload.email));
+    const subjectLine = escapeHtml(sanitizeText(payload.subject));
+    const messageHtml = escapeHtml(payload.message).replace(/\n/g, "<br />");
+
     const htmlMessage = `
-      <p><strong>Nom :</strong> ${sanitizeText(payload.name)}</p>
-      <p><strong>Email :</strong> ${sanitizeText(payload.email)}</p>
-      <p><strong>Sujet :</strong> ${sanitizeText(payload.subject)}</p>
+      <p><strong>Nom :</strong> ${nameLine}</p>
+      <p><strong>Email :</strong> ${emailLine}</p>
+      <p><strong>Sujet :</strong> ${subjectLine}</p>
       <p><strong>Message :</strong></p>
-      <p>${payload.message.replace(/\n/g, "<br />")}</p>
+      <p>${messageHtml}</p>
     `;
 
     await transporter.sendMail({
@@ -189,12 +221,12 @@ export async function POST(request: Request) {
       html: htmlMessage,
     });
 
-    return NextResponse.json({ success: true }, { headers: corsHeaders });
+    return NextResponse.json({ success: true }, { headers: corsHeaders() });
   } catch (error) {
     console.error("Erreur API contact:", error);
     return NextResponse.json(
       { success: false, error: "Une erreur est survenue lors de l'envoi du message." },
-      { status: 500, headers: corsHeaders }
+      { status: 500, headers: corsHeaders() }
     );
   }
 }

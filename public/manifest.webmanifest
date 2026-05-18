@@ -1,7 +1,7 @@
 {
-  "name": "ASD Infor — Portfolio technicien systèmes & réseaux",
+  "name": "ASD Infor — Indie maker, SaaS idaes.fr",
   "short_name": "ASD Infor",
-  "description": "Portfolio ASD Infor : futur technicien systèmes & réseaux, projets web en complément et recherche d'alternance / formation.",
+  "description": "Portfolio ASD Infor : créateur indie derrière idaes.fr, plateforme SaaS pour la présence en ligne des professionnels.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

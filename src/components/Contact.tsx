@@ -44,7 +44,6 @@ const Contact = () => {
 
     // Vérification du honeypot - si rempli, c'est probablement un bot
     if (formData.honeypot) {
-      console.log("Soumission de formulaire bloquée - suspicion de bot");
       // Simuler un succès pour ne pas alerter le bot
       setSubmitStatus("success");
       setFormData({
@@ -101,9 +100,8 @@ const Contact = () => {
       recaptchaRef.current?.reset();
 
     } catch (error) {
-      console.error('Erreur envoi message:', error);
       setSubmitStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : 'Une erreur inconnue est survenue');
+      setErrorMessage(error instanceof Error ? error.message : "Une erreur inconnue est survenue");
       setRecaptchaToken(null);
       recaptchaRef.current?.reset();
     } finally {
@@ -154,7 +152,7 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-text-secondary max-w-2xl mx-auto"
           >
-            Pour une opportunité en alternance / formation (systèmes & réseaux), ou une question sur mes projets, contactez-moi. Je réponds sous 24h.
+            Pour parler d&apos;idaes.fr, d&apos;un projet web ou simplement échanger, écrivez-moi. Je réponds dès que possible (souvent sous 24 h).
           </motion.p>
         </div>
 

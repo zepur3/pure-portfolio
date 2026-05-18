@@ -77,8 +77,8 @@ const Hero = () => {
               idaes.fr
             </a>
             {" "}— une plateforme SaaS pour aider les professionnels
-            à créer leur présence en ligne. En parallèle, disponible
-            pour missions freelance tech.
+            à créer leur présence en ligne. C&apos;est mon activité principale :
+            tout miser sur le produit pour en vivre.
           </p>
 
           <div className="flex gap-3 md:ml-auto shrink-0">
@@ -105,7 +105,7 @@ const Hero = () => {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
             >
-              Freelance →
+              Contact →
             </motion.a>
           </div>
         </motion.div>

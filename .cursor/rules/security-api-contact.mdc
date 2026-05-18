@@ -9,6 +9,6 @@ alwaysApply: false
 - Exposer uniquement **POST** (et **OPTIONS** si CORS préflight). Pas d’envoi d’email ou d’action sensible via GET.
 - Conserver : validation des champs, **reCAPTCHA** serveur, **rate limiting** par IP, champ **honeypot**, délai minimum de soumission si présent.
 - Ne pas retourner au client les détails d’erreurs internes (stack, noms de variables manquantes en prod). Logger côté serveur uniquement.
-- **CORS** : en production, `Access-Control-Allow-Origin` doit refléter l’origine autorisée du site (`NEXT_PUBLIC_SITE_URL` explicite), pas `*` si cela élargit abusivement l’accès.
-- Corps email HTML : échapper ou sanitizer tout contenu issu du formulaire ; éviter l’injection de balises ou d’en-têtes SMTP (CRLF dans sujet/expéditeur).
+- **CORS** : `Access-Control-Allow-Origin` suit `NEXT_PUBLIC_SITE_URL`, sinon `https://$VERCEL_URL` en preview, sinon en production un fallback domaine public (pas `*`). Adapter le fallback dans `route.ts` si le domaine change.
+- Corps email HTML : tout champ issu du formulaire doit passer par échappement HTML (ex. `escapeHtml`) en plus de la normalisation texte ; éviter l’injection dans le client mail.
 - Variables d’environnement requises : ne pas assouplir la liste sans revue ; toute nouvelle intégration tierce (webhook, analytics serveur) passe par des secrets en `process.env` uniquement.

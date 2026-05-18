@@ -13,9 +13,6 @@ const Footer = () => {
             <a href="#home" className="text-2xl font-bold text-gradient mb-4 inline-block">
               Portfolio
             </a>
-            <p className="text-text-secondary mb-6 max-w-md">
-              En formation, objectif : technicien systèmes & réseaux. Projets web (assistés par IA) en complément.
-            </p>
           </div>
           
           <div>

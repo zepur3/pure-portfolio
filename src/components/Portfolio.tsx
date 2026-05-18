@@ -145,7 +145,7 @@ const Portfolio = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-sm sm:text-base text-text-secondary max-w-2xl mx-auto"
             >
-              Projets web déployés en ligne, réalisés en parallèle de mon parcours systèmes & réseaux (avec l&apos;assistance de l&apos;IA).
+              Sites et expérimentations sortis en ligne, en parallèle du développement d&apos;idaes.fr.
             </motion.p>
           </div>
 

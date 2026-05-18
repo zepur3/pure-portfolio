@@ -59,9 +59,8 @@ const About = () => {
               </p>
               <p className="text-text-secondary leading-relaxed mb-10">
                 Curieux et <strong className="text-foreground font-bold">autodidacte</strong>, j&apos;apprends vite et m&apos;adapte à tout.
-                En parallèle du SaaS, je prends des{" "}
-                <strong className="text-foreground font-bold">missions freelance tech</strong>{" "}
-                (dépannage, support, dév) pour financer le projet et rester actif sur le terrain.
+                Aujourd&apos;hui je concentre mon énergie sur <strong className="text-foreground font-bold">idaes.fr</strong>{" "}
+                : itérer vite, écouter les retours et faire grandir le SaaS.
               </p>
 
               {/* Stats */}
@@ -125,11 +124,11 @@ const About = () => {
                     priority
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent pointer-events-none" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <div className="bg-background/80 backdrop-blur-sm px-4 py-3 rounded-xl border border-white/10 flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-accent animate-pulse shrink-0" />
-                    <span className="text-xs font-medium text-foreground">Disponible pour missions freelance</span>
+                    <span className="text-xs font-medium text-foreground">Focus produit · idaes.fr</span>
                   </div>
                 </div>
               </div>
