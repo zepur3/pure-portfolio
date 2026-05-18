@@ -8,10 +8,9 @@ interface TypingTextProps {
   className?: string;
 }
 
-const TypingText: React.FC<TypingTextProps> = ({ text, speed = 45, className = "" }) => {
+const TypingTextAnimator: React.FC<TypingTextProps> = ({ text, speed = 45, className = "" }) => {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
-    setDisplayed("");
     let i = 0;
     const interval = setInterval(() => {
       i++;
@@ -27,5 +26,9 @@ const TypingText: React.FC<TypingTextProps> = ({ text, speed = 45, className = "
     </span>
   );
 };
+
+const TypingText: React.FC<TypingTextProps> = (props) => (
+  <TypingTextAnimator key={props.text} {...props} />
+);
 
 export default TypingText;
