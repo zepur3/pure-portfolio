@@ -132,12 +132,30 @@ function validatePayload(payload: ContactPayload) {
   return errors;
 }
 
+/**
+ * `x-vercel-forwarded-for` est posé par l'edge Vercel et ne peut pas être falsifié
+ * par le client. `x-forwarded-for` en revanche est complété (pas remplacé) par
+ * l'infra : un client peut y préfixer une IP arbitraire, donc on ne doit jamais
+ * en prendre la première valeur (ça permettrait de contourner le rate limit).
+ */
+function getClientIp(request: Request): string {
+  const vercelIp = request.headers.get("x-vercel-forwarded-for");
+  if (vercelIp) return vercelIp.split(",")[0].trim();
+
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    const parts = forwardedFor.split(",").map((p) => p.trim()).filter(Boolean);
+    if (parts.length > 0) return parts[parts.length - 1];
+  }
+
+  return request.headers.get("x-real-ip") ?? "127.0.0.1";
+}
+
 export async function POST(request: Request) {
   try {
     validateEnv();
 
-    const ipHeader = request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip");
-    const clientIp = ipHeader ? ipHeader.split(",")[0].trim() : "127.0.0.1";
+    const clientIp = getClientIp(request);
 
     try {
       await rateLimiter.consume(clientIp);

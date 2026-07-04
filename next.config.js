@@ -13,8 +13,19 @@ const nextConfig = {
       exclude: ['error', 'warn'],
     } : false,
   },
-  // Note: Les en-têtes HTTP ne fonctionnent pas avec l'export statique
-  // Ils devront être configurés au niveau du serveur web (Apache/Nginx)
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {
