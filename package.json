@@ -14,11 +14,11 @@
     "critters": "^0.0.23",
     "framer-motion": "12.4.10",
     "gsap": "^3.12.7",
-    "next": "16.2.10",
-    "nodemailer": "^9.0.3",
+    "next": "16.3.8",
+    "nodemailer": "^10.1.7",
     "rate-limiter-flexible": "^5.0.5",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-google-recaptcha": "^3.1.0",
     "react-intersection-observer": "^9.16.0",
     "react-scroll": "^1.9.3"
@@ -27,19 +27,29 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/nodemailer": "^8.0.1",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-google-recaptcha": "^2.1.9",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.3.8",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "pnpm": {
     "overrides": {
       "motion-dom": "12.4.10",
-      "motion-utils": "12.4.10"
+      "motion-utils": "12.4.10",
+      "postcss": "^8.5.23",
+      "sharp": "^0.35.4",
+      "nanoid": "^3.3.18",
+      "js-yaml": "^4.3.2",
+      "browserslist": "^4.28.7",
+      "source-map-js": "^1.2.2",
+      "minimatch@3>brace-expansion": "^1.1.21",
+      "minimatch@10>brace-expansion": "^5.0.12",
+      "baseline-browser-mapping": "^2.11.0",
+      "@babel/core": "^7.29.6"
     }
   }
 }

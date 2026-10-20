@@ -128,6 +128,11 @@ function validatePayload(payload: ContactPayload) {
   if (!payload.recaptchaToken) {
     errors.push("Token reCAPTCHA manquant");
   }
+  // Bornes hautes : sans elles, un seul envoi pouvait faire plusieurs Mo de mail.
+  if (String(payload.name ?? "").length > 100) errors.push("Nom trop long");
+  if (String(payload.email ?? "").length > 254) errors.push("Email trop long");
+  if (String(payload.subject ?? "").length > 200) errors.push("Sujet trop long");
+  if (String(payload.message ?? "").length > 5000) errors.push("Message trop long (5000 caractères max)");
 
   return errors;
 }
