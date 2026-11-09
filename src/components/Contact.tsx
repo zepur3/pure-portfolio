@@ -164,7 +164,7 @@ const Contact = () => {
             animate={isMobile || isInView ? "visible" : "hidden"}
             className="relative z-30"
           >
-            <motion.div variants={itemVariants} className="glass-effect p-8 rounded-xl">
+            <motion.div variants={itemVariants} className="glass-effect p-5 sm:p-8 rounded-xl">
               <h3 className="text-2xl font-bold mb-6">Envoyez-moi un message</h3>
               
               {submitStatus === "success" && (
@@ -242,7 +242,8 @@ const Contact = () => {
                   />
                 </div>
                 
-                <div className="mb-4">
+                {/* Le widget reCAPTCHA fait 304px fixes : on le réduit sous 376px pour éviter le scroll horizontal. */}
+                <div className="mb-4 origin-top-left max-[375px]:scale-[0.8] max-[375px]:mb-0">
                   {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
                     <ReCAPTCHA
                       ref={recaptchaRef}
@@ -302,7 +303,7 @@ const Contact = () => {
             animate={isMobile || isInView ? "visible" : "hidden"}
             className="relative z-30"
           >
-            <motion.div variants={itemVariants} className="glass-effect p-8 rounded-xl mb-8">
+            <motion.div variants={itemVariants} className="glass-effect p-5 sm:p-8 rounded-xl mb-8">
               <h3 className="text-2xl font-bold mb-6">Informations de contact</h3>
               <div className="space-y-6">
                 <div className="flex items-start">

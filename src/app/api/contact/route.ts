@@ -156,9 +156,44 @@ function getClientIp(request: Request): string {
   return request.headers.get("x-real-ip") ?? "127.0.0.1";
 }
 
+/** Taille max du corps JSON (5000 car. de message + marge pour les autres champs et le token). */
+const MAX_BODY_BYTES = 32 * 1024;
+
+/**
+ * Refuse les POST venant d'un autre site (le CORS ne bloque que la lecture de la
+ * réponse, pas l'envoi). Un navigateur envoie toujours `Origin` sur un POST fetch.
+ */
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return process.env.NODE_ENV !== "production";
+  const allowed = getAllowedOrigin();
+  if (allowed === "*") return true;
+  const host = request.headers.get("host");
+  return origin === allowed || (host !== null && origin === `https://${host}`);
+}
+
 export async function POST(request: Request) {
   try {
     validateEnv();
+
+    if (!isAllowedOrigin(request)) {
+      return NextResponse.json({ success: false, error: "Origine non autorisée" }, { status: 403 });
+    }
+
+    if (!request.headers.get("content-type")?.includes("application/json")) {
+      return NextResponse.json(
+        { success: false, error: "Content-Type invalide" },
+        { status: 415, headers: corsHeaders() }
+      );
+    }
+
+    const declaredLength = Number(request.headers.get("content-length") ?? 0);
+    if (declaredLength > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { success: false, error: "Requête trop volumineuse" },
+        { status: 413, headers: corsHeaders() }
+      );
+    }
 
     const clientIp = getClientIp(request);
 
@@ -173,7 +208,20 @@ export async function POST(request: Request) {
 
     let payload: ContactPayload;
     try {
-      payload = await request.json();
+      // Lecture en texte pour borner la taille même sans Content-Length (chunked).
+      const raw = await request.text();
+      if (raw.length > MAX_BODY_BYTES) {
+        return NextResponse.json(
+          { success: false, error: "Requête trop volumineuse" },
+          { status: 413, headers: corsHeaders() }
+        );
+      }
+      payload = JSON.parse(raw);
+      if (typeof payload !== "object" || payload === null) throw new Error("payload");
+      // Force les types attendus : un objet/tableau dans `name` ou `message` ne doit pas passer.
+      for (const key of ["name", "email", "subject", "message", "recaptchaToken"] as const) {
+        if (typeof payload[key] !== "string") throw new Error("type");
+      }
     } catch {
       return NextResponse.json(
         { success: false, error: "Corps de requête invalide" },
