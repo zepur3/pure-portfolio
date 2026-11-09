@@ -2,7 +2,7 @@
 
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, type Variants } from "framer-motion";
 import { useIsMobile } from "@/hooks/useIsMobile";
 interface FormData {
   name: string;
@@ -111,7 +111,7 @@ const Contact = () => {
     }
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -121,7 +121,7 @@ const Contact = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,

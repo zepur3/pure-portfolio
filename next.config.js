@@ -24,7 +24,7 @@ const nextConfig = {
   poweredByHeader: false,
   // Optimisations pour améliorer le LCP
   experimental: {
-    optimizePackageImports: ['framer-motion', 'gsap'],
+    optimizePackageImports: ['framer-motion'],
   },
   // Compression des ressources
   compress: true,
