@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
@@ -60,7 +60,7 @@ const Navbar = () => {
     { name: "Contact", href: "#contact" },
   ];
 
-  const navbarVariants = {
+  const navbarVariants: Variants = {
     hidden: { y: -100, opacity: 0 },
     visible: { 
       y: 0, 
