@@ -149,12 +149,6 @@ export default function RootLayout({
         <link rel="manifest" href={MANIFEST_URL} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Google reCAPTCHA v2 */}
-        <script
-          src="https://www.google.com/recaptcha/api.js"
-          async
-          defer
-        ></script>
         <Script
           id="organization-json-ld"
           strategy="beforeInteractive"
