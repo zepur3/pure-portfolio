@@ -81,12 +81,12 @@ const Hero = () => {
             tout miser sur le produit pour en vivre.
           </p>
 
-          <div className="flex gap-3 md:ml-auto shrink-0">
+          <div className="flex flex-wrap gap-3 md:ml-auto shrink-0">
             <motion.a
               href="https://www.idaes.fr"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-accent text-white font-bold py-4 px-7 rounded-full inline-flex items-center gap-2 text-sm uppercase tracking-wider hover:bg-accent-600 transition-colors duration-300"
+              className="bg-accent text-white font-bold py-4 px-5 sm:px-7 whitespace-nowrap rounded-full inline-flex items-center gap-2 text-sm uppercase tracking-wider hover:bg-accent-600 transition-colors duration-300"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
             >
@@ -97,7 +97,7 @@ const Hero = () => {
             </motion.a>
             <motion.a
               href="#contact"
-              className={`font-bold py-4 px-7 rounded-full text-sm uppercase tracking-wider border transition-colors duration-300 ${
+              className={`font-bold py-4 px-5 sm:px-7 whitespace-nowrap rounded-full text-sm uppercase tracking-wider border transition-colors duration-300 ${
                 isLight
                   ? "border-black/20 text-black/70 hover:border-accent hover:text-accent"
                   : "border-white/20 text-white/60 hover:border-accent hover:text-accent"

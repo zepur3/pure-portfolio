@@ -64,17 +64,6 @@ const Portfolio = () => {
       tech: "Next.js",
     },
     {
-      id: 5,
-      title: "Ranch Légumes",
-      category: "web",
-      image: "/images/portfolio/ranch.webp",
-      description: "Site web pour un ranch de légumes bio. Interface claire et intuitive développée avec Next.js.",
-      link: "https://ranch-legumes.vercel.app/",
-      github: "https://github.com/zepur3/ranch-legumes",
-      status: "En ligne",
-      tech: "Next.js",
-    },
-    {
       id: 6,
       title: "Premier Site Web",
       category: "web",

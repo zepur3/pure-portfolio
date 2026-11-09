@@ -1,38 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 const DEFAULT_BREAKPOINT = 768;
 
+/**
+ * `useSyncExternalStore` renvoie la valeur serveur (false) pendant l'hydratation puis
+ * re-rend avec la vraie valeur : pas de mismatch SSR/client sur mobile.
+ */
 export function useIsMobile(breakpoint: number = DEFAULT_BREAKPOINT): boolean {
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-    return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches;
-  });
+  const query = `(max-width: ${breakpoint - 1}px)`;
 
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mediaQuery = window.matchMedia(query);
+      mediaQuery.addEventListener("change", onChange);
+      return () => mediaQuery.removeEventListener("change", onChange);
+    },
+    [query]
+  );
 
-    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    };
-
-    // Initial state sync (for older browsers and SSR hydration)
-    setIsMobile(mediaQuery.matches);
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
-    }
-
-    // Fallback for Safari < 14
-    mediaQuery.addListener(handleChange);
-    return () => mediaQuery.removeListener(handleChange);
-  }, [breakpoint]);
-
-  return isMobile;
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false
+  );
 }
