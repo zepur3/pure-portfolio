@@ -36,7 +36,8 @@ const REQUIRED_ENV_VARS = [
 function getAllowedOrigin(): string {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (configured) return configured.replace(/\/$/, "");
-  const vercel = process.env.VERCEL_URL?.trim();
+  // Domaine de prod (ex. asdinfor.ovh) : VERCEL_URL ne donne que l'URL du déploiement.
+  const vercel = (process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL)?.trim();
   if (vercel) {
     const host = vercel.replace(/^https?:\/\//, "");
     return `https://${host}`;
@@ -67,7 +68,7 @@ function validateEnv() {
   }
 }
 
-async function verifyRecaptcha(token: string, remoteIp: string | null) {
+async function verifyRecaptcha(token: string, remoteIp: string | null, expectedHost: string | null) {
   const secret = process.env.RECAPTCHA_SECRET_KEY;
   if (!secret) {
     throw new Error("RECAPTCHA_SECRET_KEY non configurée");
@@ -86,6 +87,7 @@ async function verifyRecaptcha(token: string, remoteIp: string | null) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: params.toString(),
+    signal: AbortSignal.timeout(5000),
   });
 
   if (!response.ok) {
@@ -93,7 +95,18 @@ async function verifyRecaptcha(token: string, remoteIp: string | null) {
   }
 
   const data = await response.json();
-  return data.success === true;
+  if (data.success !== true) return false;
+  // Un token résolu sur un autre site (qui réutiliserait la clé publique) est refusé.
+  // (Contrôle limité à la prod : les clés de test Google renvoient "testkey.google.com".)
+  if (
+    process.env.NODE_ENV === "production" &&
+    expectedHost &&
+    typeof data.hostname === "string" &&
+    data.hostname !== expectedHost
+  ) {
+    return false;
+  }
+  return true;
 }
 
 function sanitizeText(value: string) {
@@ -116,7 +129,8 @@ function validatePayload(payload: ContactPayload) {
   if (!payload.name || payload.name.trim().length < 2) {
     errors.push("Nom invalide");
   }
-  if (!payload.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+  // Pas de , ; < > " ( ) : sinon nodemailer interprète plusieurs adresses dans le Reply-To.
+  if (!payload.email || !/^[^\s@<>,;"()\[\]\\:]+@[^\s@<>,;"()\[\]\\:]+\.[^\s@<>,;"()\[\]\\:]+$/.test(payload.email)) {
     errors.push("Email invalide");
   }
   if (!payload.subject || payload.subject.trim().length < 3) {
@@ -252,7 +266,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const recaptchaOk = await verifyRecaptcha(payload.recaptchaToken, clientIp);
+    const requestHost = request.headers.get("host")?.split(":")[0] ?? null;
+    const recaptchaOk = await verifyRecaptcha(payload.recaptchaToken, clientIp, requestHost);
     if (!recaptchaOk) {
       return NextResponse.json(
         { success: false, error: "Vérification reCAPTCHA échouée." },
