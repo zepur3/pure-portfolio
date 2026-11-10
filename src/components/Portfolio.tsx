@@ -85,6 +85,17 @@ const Portfolio = () => {
       status: "En ligne",
       tech: "Next.js / Doctolib",
     },
+    {
+      id: 8,
+      title: "Atelier Sillon — Boutique en ligne",
+      category: "web",
+      image: "/images/portfolio/atelier-sillon.webp",
+      description: "Boutique de démonstration pour un céramiste fictif : catalogue, fiches produit, panier et paiement Stripe en mode test. Pages légales FR, Lighthouse mobile 100 en performance.",
+      link: "https://atelier-sillon.idaes.fr/",
+      github: "",
+      status: "En ligne",
+      tech: "Astro / Stripe",
+    },
   ];
 
   const filteredProjects = activeCategory === "all" 
